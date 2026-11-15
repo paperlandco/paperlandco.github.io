@@ -27,11 +27,11 @@ MONTHS = {m: i + 1 for i, m in enumerate('January February March April May June 
 
 PAGES = {  # file -> (title, description, og image)
     'index.html': ('Enter Paper Land — notebooks designed in Adelaide',
-                   'Step into Paper Land, a pixel-art island where every stop is a notebook collection. Explore Saigon Mornings, Adelaide Arvo and the Crabit Coffee Series, or skip straight to the shop.'),
+                   'Step into Paper Land, a pixel-art island where every stop is a notebook collection. Explore Saigon Mornings and Adelaide Arvo, or skip straight to the shop.'),
     'home.html': ('Paper Land — Notebooks for slow mornings',
-                  'Paper Land makes hardcover notebooks with a single word and its definition on the cover. Designed in Adelaide, inspired by Saigon mornings. Free shipping Australia-wide over $60.'),
+                  'Hardcover notebooks with a single word and its definition on the cover. Designed in Adelaide, inspired by Saigon mornings. Free shipping over $60.'),
     'shop.html': ('Shop all notebooks, planners and gift sets — Paper Land',
-                  'Shop every Paper Land notebook: A5 hardcovers, undated planners, pocket notes, gift sets and the Crabit Coffee Series. Prices in AUD, free shipping Australia-wide over $60.'),
+                  'Shop every Paper Land notebook: A5 hardcovers, undated planners, pocket notes, gift sets and the Crabit Coffee Series. Free shipping over $60 in Australia.'),
     'collections.html': ('Collections — Saigon Mornings, Adelaide Arvo and more | Paper Land',
                          'Browse Paper Land by collection: Saigon Mornings, Adelaide Arvo, Someday Studio and the Crabit Coffee Series from Vietnam.'),
     'about.html': ('Our Story — Paper Land',
