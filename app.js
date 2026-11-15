@@ -279,7 +279,6 @@ function pageHome(){
   spinShelf();
   const pick={saigon:'iced-coffee',adelaide:'arvo',studio:'someday',crabit:'crabit-latte'};
   $('#colTiles').innerHTML=Object.entries(COLLECTIONS).map(([k,c])=>`<a class="tile" href="shop.html#${k}"><div class="timg">${shot(pick[k])}</div><h3>${c.name}</h3></a>`).join('');
-  $('#arrivals').innerHTML=['arvo','cuppa','someday','crabit-americano'].map(card).join('');
   turnBook();
 }
 /* home: a shelf of 3D notebooks that turns by itself, by drag, or with the arrow buttons */
@@ -320,8 +319,9 @@ function spinShelf(){
 /* home: one notebook that turns as the page scrolls (front, page edge, back) */
 function turnBook(){
   const sec=$('#turn'), book=$('#turnBook'), txt=[...sec.querySelectorAll('.turn-txt')];
+  if(matchMedia('(max-width: 760px)').matches){sec.remove();return}   /* phones: no scroll-turn section */
   book.innerHTML=book3d('alleyway');
-  const b=book.firstElementChild, still=matchMedia('(prefers-reduced-motion: reduce)').matches||matchMedia('(max-width: 760px)').matches;
+  const b=book.firstElementChild, still=matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(still){sec.classList.add('static');b.style.transform='rotateX(6deg) rotateY(-28deg)';return}
   let tick=false;
   const draw=()=>{tick=false;const rc=sec.getBoundingClientRect(),span=rc.height-innerHeight;

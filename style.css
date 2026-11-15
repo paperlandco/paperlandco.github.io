@@ -604,3 +604,36 @@ body{font-weight:400;font-size:15px;letter-spacing:-.005em}
   .gimg:first-child:nth-last-child(odd){grid-column:auto}
 }
 @media (prefers-reduced-motion:reduce){.turn-book .b3{transition:none}}
+
+/* ======================================================
+   Airier type: lighter weights, looser tracking and
+   leading, less upper case. Overrides the bolder set above.
+   ====================================================== */
+body{letter-spacing:0;line-height:1.7}
+.hero h1,.ch-text h2,.sec-head h2,.craft h2,.club h2,.page-head h1,.info h1,.col-intro h2,
+.story h2,.values h2,.process h2,.article h1,.help h2,.dhead h3{font-weight:300;letter-spacing:-.012em;line-height:1.18}
+.logo{letter-spacing:-.02em;font-weight:600}
+.eyebrow{font-weight:500;letter-spacing:.16em}
+.btn,.link,.add,.dd-panel a,.menu a,.menu button,.cart-btn{font-weight:400}
+.btn{letter-spacing:.04em}
+.link,.add{letter-spacing:.08em;font-size:11px}
+.card h3,.item h5,.post h3,.vgrid h3,.stockists h4{font-weight:400;letter-spacing:0}
+.jlist .post.feature h3,.article .body h2{font-weight:400;letter-spacing:-.01em}
+.note q,.info .defn,.article .lede,.empty,.club .ok,.cform .ok,.native,.ch-text .native,.col-intro .native{font-weight:400;letter-spacing:0}
+.pull q{font-weight:300;letter-spacing:-.012em}
+.info .defn{font-size:16px;line-height:1.6}
+.info p.desc,.page-head p,.post p{line-height:1.75}
+.h2-head h2{font-weight:300}
+.spin-cap{letter-spacing:.01em}
+.tile h3{letter-spacing:0}
+@media (max-width:760px){
+  .turn{display:none}
+  .info h1{font-size:25px;font-weight:400;line-height:1.25}
+  .info .price{font-size:16px}
+  .crumbs{font-size:10.5px;letter-spacing:.1em;line-height:1.9}
+  .h2-head h2{font-size:22px}
+  .h2-line{font-size:19px;margin:22px 20px 20px;line-height:1.35}
+  .tile h3{font-size:13.5px;margin-top:10px}
+  .service{font-size:13px}
+  .service>div{padding:16px 10px 16px 0}
+}
