@@ -258,7 +258,7 @@ function drawCart(){
     <strong style="font-weight:400">${money(p.price*cart[id])}</strong></div>`}).join(''):'<div class="empty">Your cart is empty — for now.</div>';
 }
 document.addEventListener('click',e=>{
-  const c=e.target.closest('.card a.stage-link, .itm a.art');
+  const c=e.target.closest('.card a.stage-link, .itm a.art, .b-fan a');
   if(c){const m=(c.getAttribute('href')||'').match(/product-([a-z0-9-]+)\.html/);if(m&&PRODUCTS[m[1]])track('select_item',{item_list_id:document.body.dataset.page||'game',items:[gaItem(m[1])]})}
   const a=e.target.closest('[data-add]');
   if(a){addToCart(a.dataset.add);a.textContent='Added ✓';a.classList.add('done');setTimeout(()=>{a.textContent='Add to Cart';a.classList.remove('done')},1400)}
@@ -268,15 +268,9 @@ document.addEventListener('click',e=>{
 
 /* ---------- page: home ---------- */
 function pageHome(){
-  [['h1','a','alleyway'],['h2','b','brekkie'],['h3','c','iced-coffee']].forEach(([e,c,id])=>{const el=document.getElementById(e);el.outerHTML=cover(id).replace('class="nb','class="nb '+c)});
-  $('#notes').innerHTML=[...NOTES,...NOTES].map(([q,s])=>`<div class="note"><q>${q}</q><span>— ${s}</span></div>`).join('');
-  $('#chapters').innerHTML=Object.entries(COLLECTIONS).map(([k,c],i)=>{
-    const items=Object.keys(PRODUCTS).filter(id=>PRODUCTS[id].col===k).sort((a,b)=>!!PRODUCTS[b].imgs-!!PRODUCTS[a].imgs).slice(0,3);
-    return `<section class="chapter"><div class="ch-text"><div class="eyebrow">${c.chapter}</div><div class="native">${c.sub}</div><h2>${c.name}</h2><p>${c.blurb}</p>
-      <a href="collections.html#${k}" class="btn">Explore Collection</a></div>
-      <div class="ch-visual" style="background:${c.bg}"><span class="ch-num">${['i.','ii.','iii.'][i]}</span>${items.map(cover).join('')}</div></section>`}).join('');
-  $('#featured').innerHTML=['iced-coffee','arvo','someday','saigon-set'].map(card).join('');
-  $('#jprev').innerHTML=Object.entries(JOURNAL).map(([k,j])=>postCard(k,j)).join('');
+  $('#bFan').innerHTML=['street-food','alleyway','iced-coffee','arvo','someday'].map(id=>`<a href="${purl(id)}" aria-label="${titleOf(id)}">${cover(id)}</a>`).join('');
+  $('#featured').innerHTML=['iced-coffee','arvo','someday','alleyway'].map(card).join('');
+  $('#storyVis').innerHTML=cover('iced-coffee')+cover('arvo');
 }
 function postCard(k,j){
   return `<article class="post"><a href="${jurl(k)}"><div class="img" style="background:${j.bg}"><div class="glyph">${j.glyph}</div></div></a>
