@@ -23,7 +23,7 @@ const ICON={
   c3:'<svg viewBox="0 0 24 24"><g stroke-linecap="round" stroke-width="2.6"><path d="M5 5h0M12 5h0M19 5h0M5 12h0M12 12h0M19 12h0M5 19h0M12 19h0M19 19h0"/></g></svg>'
 };
 const store={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
-const idFromCard=card=>{const a=q('a.stage-link',card);if(!a)return null;const h=a.getAttribute('href')||'';return decodeURIComponent(h.includes('#')?h.split('#')[1]:h.split('/products/')[1]||'')};
+const idFromCard=card=>{const a=q('a.stage-link',card);if(!a)return null;const h=a.getAttribute('href')||'',m=h.match(/product-([a-z0-9-]+)\.html/);return decodeURIComponent(m?m[1]:h.includes('#')?h.split('#')[1]:h.split('/products/')[1]||'')};
 
 /* ---------- scrim + drawers ---------- */
 const scrim=document.createElement('div');scrim.className='mscrim';document.body.appendChild(scrim);

@@ -32,6 +32,10 @@ python3 tools/build.py            # product-*.html, journal-*.html, head tags, s
 python3 tools/build.py --images   # also re-render the share images in img/og/
 ```
 
+Product pictures for items without real photos are renders of the 3D notebook model
+(`book3d()` in `app.js`): `python3 tools/render_shots.py` writes them to `img/p/`.
+The same model drives the turning shelf and the scroll-turn section on `home.html` (CSS 3D, no libraries).
+
 The build writes the description, canonical URL, Open Graph tags and structured data
 (Product, Article, Breadcrumb) into each page. `sitemap.xml` lists every page; submit it in Google Search Console.
 

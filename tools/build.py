@@ -105,7 +105,8 @@ async def extract(pw):
     pg = await b.new_page()
     await pg.goto('file://' + os.path.join(ROOT, 'shop.html'))
     data = await pg.evaluate('''() => ({P: PRODUCTS, C: COLLECTIONS, J: JOURNAL,
-        T: Object.fromEntries(Object.keys(PRODUCTS).map(id => [id, titleOf(id)]))})''')
+        T: Object.fromEntries(Object.keys(PRODUCTS).map(id => [id, titleOf(id)])),
+        G: Object.fromEntries(Object.keys(PRODUCTS).map(id => [id, gallery(id)]))})''')
     await b.close()
     return data
 
@@ -132,7 +133,7 @@ def build_products(D):
         image = f'img/og/{pid}.jpg'
         brand = p.get('brand') or SITE
         ld = [{'@context': 'https://schema.org', '@type': 'Product', 'name': title_txt, 'description': strip_tags(p['desc']),
-               'image': [BASE + image] + [BASE + i for i in p.get('imgs', [])], 'sku': pid, 'category': 'Notebooks & Journals',
+               'image': [BASE + i for i in D['G'][pid]] + [BASE + image], 'sku': pid, 'category': 'Notebooks & Journals',
                'brand': {'@type': 'Brand', 'name': brand},
                'offers': {'@type': 'Offer', 'url': BASE + f, 'priceCurrency': 'AUD', 'price': f"{p['price']:.2f}",
                           'itemCondition': 'https://schema.org/NewCondition'}},
