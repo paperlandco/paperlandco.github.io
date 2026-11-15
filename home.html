@@ -33,49 +33,43 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Press+Start+2P&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=202611160016">
-<link rel="stylesheet" href="mobile.css?v=202611160016">
+<link rel="stylesheet" href="style.css?v=202611160038">
+<link rel="stylesheet" href="mobile.css?v=202611160038">
 </head>
 <body data-page="home">
 <div id="site-header"></div>
 <main>
 
-<section class="h2-hero">
-  <h1 class="sr-only">Paper Land — notebooks with a word on the cover</h1>
-  <div class="spin" id="spin" role="group" aria-label="Notebooks. Drag, or use the arrow buttons, to turn the shelf.">
-    <div class="spin-ring" id="spinRing"></div>
-    <button class="spin-nav prev" type="button" aria-label="Previous notebook">&#8249;</button>
-    <button class="spin-nav next" type="button" aria-label="Next notebook">&#8250;</button>
+<section class="wrap hero">
+  <div>
+    <div class="eyebrow">Design-led stationery · Adelaide &amp; Saigon</div>
+    <h1>Welcome to<br><em>Paper Land.</em></h1>
+    <p>We make notebooks, planners and journals for the small rituals of an ordinary day — each cover a single word, defined the way you actually live it.</p>
+    <div class="ctas"><a href="about.html" class="btn solid">Our Story</a><a href="shop.html" class="link">Shop Notebooks</a></div>
+    <a href="index.html" class="play-cta"><span>▶</span> New: explore Paper Land as a game</a>
   </div>
-  <div class="spin-cap" id="spinCap" aria-live="polite"></div>
-  <div class="h2-line">Notebooks with a word on the cover.</div>
-  <a href="shop.html" class="btn2 solid">Shop all</a>
+  <div class="hero-stack" aria-hidden="true"><div id="h1"></div><div id="h2"></div><div id="h3"></div><div class="shelf"></div></div>
 </section>
-
-<section class="wrap h2-sec">
-  <div class="h2-head"><h2>Collections</h2><a href="collections.html" class="link">View all</a></div>
-  <div class="tiles" id="colTiles"></div>
+<div class="notes" aria-label="Margin notes"><div class="notes-track" id="notes"></div></div>
+<div id="chapters"></div>
+<section class="wrap">
+  <div class="sec-head"><div><div class="eyebrow">Featured</div><h2>Every cover, a word worth keeping.</h2></div><a href="shop.html" class="link">See All</a></div>
+  <div class="grid" id="featured"></div>
 </section>
-
-<section class="turn" id="turn" aria-label="Inside every notebook">
-  <div class="turn-stick">
-    <div class="turn-txt" data-s="0"><b>One word on the cover.</b></div>
-    <div class="turn-txt" data-s="1"><b>160 pages, 120gsm.</b></div>
-    <div class="turn-txt" data-s="2"><b>Elastic, ribbon, back pocket.</b></div>
-    <div class="turn-book" id="turnBook" aria-hidden="true"></div>
-    <div class="turn-hint" aria-hidden="true">Scroll to turn it</div>
-  </div>
-</section>
-
-<section class="wrap service">
-  <div><b>Free shipping</b><span>Australia-wide over $60</span></div>
-  <div><b>30-day returns</b><span>On unused items</span></div>
-  <div><b>Sent from Adelaide</b><span>In 1–2 business days</span></div>
-  <div><b>Questions?</b><span><a href="help.html">Help and contact</a></span></div>
+<section class="craft"><div class="wrap">
+  <div><div class="eyebrow">Inside every notebook</div><h2>Made to be written in, not saved for best.</h2>
+  <p>Thick, smooth paper that takes fountain pen and brush lettering without ghosting. A binding that lies flat on the café table. An elastic band, a ribbon, and a back pocket for the receipts you swear you'll keep.</p></div>
+  <div class="specs">
+    <div class="spec"><b>120</b><span>gsm ivory paper</span></div><div class="spec"><b>160</b><span>numbered pages</span></div><div class="spec"><b>5mm</b><span>dot grid</span></div>
+    <div class="spec"><b>180°</b><span>lay-flat binding</span></div><div class="spec"><b>A5</b><span>14.8 × 21 cm</span></div><div class="spec"><b>1</b><span>ribbon · band · pocket</span></div>
+  </div></div></section>
+<section class="wrap">
+  <div class="sec-head"><div><div class="eyebrow">Our Journal</div><h2>Notes from the margins.</h2></div><a href="journal.html" class="link">Read All</a></div>
+  <div class="journal" id="jprev"></div>
 </section>
 </main>
 <div id="site-footer"></div>
-<script src="app.js?v=202611160016"></script>
-<script src="mobile.js?v=202611160016"></script>
+<script src="app.js?v=202611160038"></script>
+<script src="mobile.js?v=202611160038"></script>
 </body>
 </html>

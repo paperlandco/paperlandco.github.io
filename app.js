@@ -141,17 +141,9 @@ function cover(id){
   if(p.spiral) return `<div class="nb spiral gingham"><div class="w">pocket notes</div></div>`;
   return `<div class="nb ${p.dark?'dark':''}" style="background:${p.bg}"><div class="w">${p.name}</div><div class="ph"><span>${p.ph}</span><span>noun</span></div><div class="rule"></div><div class="def">${p.def}</div></div>`;
 }
-/* 3D notebook: the same cover on a box with a spine, a back and page edges */
-function book3d(id){
-  const p=PRODUCTS[id], c=p.spiral?C.dusk:p.bg;
-  return `<div class="b3${p.spiral?' sq':''}" style="--c:${c};--bc:${p.dark?'#d9d2c8':'#1F1D1B'}"><i class="b3-f">${cover(id)}</i><i class="b3-b"></i><i class="b3-s"></i><i class="b3-pr"></i><i class="b3-pt"></i><i class="b3-pb"></i></div>`;
-}
-/* product pictures: real photos where we have them, otherwise the rendered shots in img/p/ (tools/render_shots.py) */
-const gallery = id => PRODUCTS[id].imgs || Array.from({length:PRODUCTS[id].set?2:4},(_,i)=>`img/p/${id}-${i+1}.jpg`);
-const shot = (id,n=0) => img(gallery(id)[n],titleOf(id));
 function card(id){
   const p=PRODUCTS[id];
-  return `<div class="card"><a class="stage-link" href="${purl(id)}"><div class="stage">${p.tag?`<span class="tag">${p.tag}</span>`:''}${shot(id)}</div>
+  return `<div class="card"><a class="stage-link" href="${purl(id)}"><div class="stage">${p.tag?`<span class="tag">${p.tag}</span>`:''}${cover(id)}</div>
     <h3>${titleOf(id)}</h3></a><div class="meta">${p.brand?`by ${p.brand} · `:''}${p.fmt}${p.paper?' · '+p.paper:''}</div>
     <div class="row"><span class="price">${money(p.price)} AUD</span><button class="add" data-add="${id}">Add to Cart</button></div></div>`;
 }
@@ -260,7 +252,7 @@ function drawCart(){
   {const a=$('#checkout'),u=checkoutUrl();if(a){a.href=u||'#';$('#msg').style.display='none'}}
   const left=Math.max(0,FREE_SHIP-sub);
   $('#ship').innerHTML=(left>0?`You're ${money(left)} away from free shipping.`:`You've unlocked free shipping.`)+`<div class="bar"><i style="width:${Math.min(100,sub/FREE_SHIP*100)}%"></i></div>`;
-  $('#items').innerHTML=ids.length?ids.map(id=>{const p=PRODUCTS[id];const bg=`url(${gallery(id)[0]}) center/cover`;
+  $('#items').innerHTML=ids.length?ids.map(id=>{const p=PRODUCTS[id];const bg=p.imgs?`url(${p.imgs[0]}) center/cover`:p.set?PRODUCTS[p.set[0]].bg:p.bg;
     return `<div class="item"><a href="${purl(id)}" class="sw" style="background:${bg}"></a><div><h5><a href="${purl(id)}">${titleOf(id)}</a></h5><small>${money(p.price)}</small>
     <div class="qty"><button data-q="-1" data-id="${id}" aria-label="Decrease">−</button>${cart[id]}<button data-q="1" data-id="${id}" aria-label="Increase">+</button></div></div>
     <strong style="font-weight:400">${money(p.price*cart[id])}</strong></div>`}).join(''):'<div class="empty">Your cart is empty — for now.</div>';
@@ -276,60 +268,15 @@ document.addEventListener('click',e=>{
 
 /* ---------- page: home ---------- */
 function pageHome(){
-  spinShelf();
-  const pick={saigon:'iced-coffee',adelaide:'arvo',studio:'someday',crabit:'crabit-latte'};
-  $('#colTiles').innerHTML=Object.entries(COLLECTIONS).map(([k,c])=>`<a class="tile" href="shop.html#${k}"><div class="timg">${shot(pick[k])}</div><h3>${c.name}</h3></a>`).join('');
-  turnBook();
-}
-/* home: a shelf of 3D notebooks that turns by itself, by drag, or with the arrow buttons */
-function spinShelf(){
-  const ids=['iced-coffee','alleyway','street-food','arvo','brekkie','cuppa','someday'], N=ids.length, step=360/N;
-  const root=$('#spin'), ring=$('#spinRing'), cap=$('#spinCap');
-  ring.innerHTML=ids.map(id=>`<a class="spin-item" href="${purl(id)}" draggable="false" aria-label="${titleOf(id)}, ${money(PRODUCTS[id].price)}">${book3d(id)}</a>`).join('');
-  const items=[...ring.children], still=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let a=0, goal=null, drag=null, moved=0, idle=0, front=-1, r=0, seen=true, last=0;
-  const size=()=>{r=parseFloat(getComputedStyle(root).getPropertyValue('--r'))||320;items.forEach((el,i)=>el.style.transform=`rotateY(${i*step}deg) translateZ(${r}px)`)};
-  function place(){
-    ring.style.transform=`translateZ(${-r}px) rotateY(${a}deg)`;
-    let best=0,bc=-2;
-    items.forEach((el,i)=>{const c=Math.cos((a+i*step)*Math.PI/180);el.style.opacity=c<-.1?0:Math.min(1,(c+.1)/.45);el.style.pointerEvents=c>.25?'auto':'none';el.tabIndex=c>.25?0:-1;if(c>bc){bc=c;best=i}});
-    if(best!==front){front=best;const id=ids[best];cap.innerHTML=`<a href="${purl(id)}">${titleOf(id)}</a> · ${money(PRODUCTS[id].price)} AUD`}
-  }
-  function frame(t){
-    const dt=Math.min(.05,(t-last)/1000||0);last=t;
-    if(seen&&!document.hidden){
-      if(goal!==null){a+=(goal-a)*Math.min(1,dt*7);if(Math.abs(goal-a)<.15){a=goal;goal=null}place()}
-      else if(!drag&&!still&&idle<=0){a-=8*dt;place()}
-      if(idle>0)idle-=dt;
-    }
-    requestAnimationFrame(frame);
-  }
-  const turn=d=>{goal=(Math.round((goal===null?a:goal)/step)+d)*step;idle=4;track('carousel_turn',{direction:d>0?'prev':'next'})};
-  root.querySelector('.prev').onclick=()=>turn(1); root.querySelector('.next').onclick=()=>turn(-1);
-  root.addEventListener('pointerdown',e=>{if(e.target.closest('.spin-nav'))return;drag={x:e.clientX,a};moved=0;goal=null;root.classList.add('dragging')});
-  window.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-drag.x;moved=Math.abs(dx);a=drag.a+dx*.3;place()});
-  window.addEventListener('pointerup',()=>{if(!drag)return;drag=null;root.classList.remove('dragging');idle=3;goal=Math.round(a/step)*step});
-  root.addEventListener('click',e=>{if(moved>6){e.preventDefault();e.stopPropagation()}},true);
-  root.addEventListener('mouseenter',()=>idle=1e9); root.addEventListener('mouseleave',()=>idle=.6);
-  root.addEventListener('focusin',()=>idle=1e9); root.addEventListener('focusout',()=>idle=2);
-  if('IntersectionObserver' in window) new IntersectionObserver(es=>seen=es[0].isIntersecting).observe(root);
-  window.addEventListener('resize',()=>{size();place()});
-  size(); place(); requestAnimationFrame(frame);
-}
-/* home: one notebook that turns as the page scrolls (front, page edge, back) */
-function turnBook(){
-  const sec=$('#turn'), book=$('#turnBook'), txt=[...sec.querySelectorAll('.turn-txt')];
-  if(matchMedia('(max-width: 760px)').matches){sec.remove();return}   /* phones: no scroll-turn section */
-  book.innerHTML=book3d('alleyway');
-  const b=book.firstElementChild, still=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(still){sec.classList.add('static');b.style.transform='rotateX(6deg) rotateY(-28deg)';return}
-  let tick=false;
-  const draw=()=>{tick=false;const rc=sec.getBoundingClientRect(),span=rc.height-innerHeight;
-    const p=Math.max(0,Math.min(1,-rc.top/span));
-    b.style.transform=`rotateX(${6-p*2}deg) rotateY(${-22-p*190}deg)`;
-    const s=p<.34?0:p<.67?1:2;txt.forEach((t,i)=>t.classList.toggle('on',i===s))};
-  window.addEventListener('scroll',()=>{if(!tick){tick=true;requestAnimationFrame(draw)}},{passive:true});
-  window.addEventListener('resize',draw); draw();
+  [['h1','a','alleyway'],['h2','b','brekkie'],['h3','c','iced-coffee']].forEach(([e,c,id])=>{const el=document.getElementById(e);el.outerHTML=cover(id).replace('class="nb','class="nb '+c)});
+  $('#notes').innerHTML=[...NOTES,...NOTES].map(([q,s])=>`<div class="note"><q>${q}</q><span>— ${s}</span></div>`).join('');
+  $('#chapters').innerHTML=Object.entries(COLLECTIONS).map(([k,c],i)=>{
+    const items=Object.keys(PRODUCTS).filter(id=>PRODUCTS[id].col===k).sort((a,b)=>!!PRODUCTS[b].imgs-!!PRODUCTS[a].imgs).slice(0,3);
+    return `<section class="chapter"><div class="ch-text"><div class="eyebrow">${c.chapter}</div><div class="native">${c.sub}</div><h2>${c.name}</h2><p>${c.blurb}</p>
+      <a href="collections.html#${k}" class="btn">Explore Collection</a></div>
+      <div class="ch-visual" style="background:${c.bg}"><span class="ch-num">${['i.','ii.','iii.'][i]}</span>${items.map(cover).join('')}</div></section>`}).join('');
+  $('#featured').innerHTML=['iced-coffee','arvo','someday','saigon-set'].map(card).join('');
+  $('#jprev').innerHTML=Object.entries(JOURNAL).map(([k,j])=>postCard(k,j)).join('');
 }
 function postCard(k,j){
   return `<article class="post"><a href="${jurl(k)}"><div class="img" style="background:${j.bg}"><div class="glyph">${j.glyph}</div></div></a>
@@ -362,10 +309,16 @@ function pageProduct(){
     const p=PRODUCTS[id], col=COLLECTIONS[p.col];
     if(!fixed) document.title=titleOf(id)+' — Paper Land';
     track('view_item',{currency:'AUD',value:p.price,items:[gaItem(id)]});
-    const pics=gallery(id);
+    const views=[cover(id)];
+    if(p.imgs){views.length=0;views.push(...p.imgs.map(src=>img(src,titleOf(id))));}
+    else if(p.brand){views.push(`<div class="spread"><div><em>${p.short.toLowerCase()}</em></div><div></div></div>`);}
+    else if(!p.set){views.push(`<div class="spread"><div><em>${p.spiral?'notes':p.name}</em></div><div></div></div>`);
+      views.push(p.spiral?cover(id):`<div class="nb back ${p.dark?'dark':''}" style="background:${p.bg}"><div class="label"><b>Paper Land</b>${p.fmt.split(' · ')[0]}<br>${p.ruling}</div></div>`);}
+    else views.push(...p.set.map(cover));
     let qty=1;
     $('#pdp').innerHTML=`
-      <div class="gallery g2">${pics.map((src,i)=>`<div class="gimg">${img(src,titleOf(id)+(i?`, view ${i+1}`:''))}</div>`).join('')}</div>
+      <div class="gallery"><div class="main" id="main">${views[0]}</div>
+        <div class="thumbs" style="grid-template-columns:repeat(${views.length},1fr)">${views.map((v,i)=>`<button data-v="${i}" class="${i?'':'on'}" aria-label="View ${i+1}">${v.replace('class="spread"','class="spread small"')}</button>`).join('')}</div></div>
       <div class="info">
         <div class="eyebrow">${col?`<a href="collections.html#${p.col}">${col.name}</a>`:'<a href="shop.html#sets">Gift Sets</a>'}</div>
         <h1>${titleOf(id)}</h1><div class="price">${money(p.price)} AUD</div>
@@ -383,6 +336,7 @@ function pageProduct(){
         <details><summary>Shipping &amp; Returns</summary><div class="body">Standard shipping $9.95 Australia-wide, free over $${FREE_SHIP}. Unused items can be returned within 30 days. <a href="help.html#shipping" style="border-bottom:1px solid">Full policy</a>.</div></details>
         <details><summary>Paper &amp; Pens</summary><div class="body">Tested with gel, ballpoint, pencil and fine fountain pens. Very wet markers may show through — try them on the last page first.</div></details>
       </div>`;
+    document.querySelectorAll('.thumbs button').forEach(b=>b.onclick=()=>{$('#main').innerHTML=views[b.dataset.v];document.querySelectorAll('.thumbs button').forEach(x=>x.classList.toggle('on',x===b))});
     $('#minus').onclick=()=>{qty=Math.max(1,qty-1);$('#qty').textContent=qty};
     $('#plus').onclick=()=>{qty++;$('#qty').textContent=qty};
     $('#buy').onclick=()=>{addToCart(id,qty);openCart()};
