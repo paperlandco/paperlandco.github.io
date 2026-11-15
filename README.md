@@ -9,10 +9,10 @@ Website for Paper Land, a design-led stationery brand: notebooks, planners and p
 | `index.html` | Game entrance: pixel-art "Enter Paper Land" (first page visitors see) |
 | `home.html` | Regular home page |
 | `shop.html` | Shop all products, with filters and sorting |
-| `product.html#<id>` | Product detail, e.g. `product.html#arvo` |
+| `product-<id>.html` | Product detail, one real page per product, e.g. `product-arvo.html` (old `product.html#arvo` links forward here) |
 | `collections.html` | Saigon Mornings, Adelaide Arvo, Someday Studio |
 | `about.html` | Our story |
-| `journal.html` / `article.html#<id>` | Journal list and articles |
+| `journal.html` / `journal-<id>.html` | Journal list and one real page per post |
 | `help.html` | FAQ, shipping, contact, stockists |
 
 Shared files: `style.css` holds all styling. `app.js` holds the header, footer, cart and all product and journal data.
@@ -20,6 +20,28 @@ Shared files: `style.css` holds all styling. `app.js` holds the header, footer, 
 ## Editing products
 
 Products, prices and descriptions are in the `PRODUCTS` object at the top of `app.js`. Journal posts are in the `JOURNAL` object.
+
+## SEO build
+
+Every product and journal post has its own page so search engines and social apps can read it.
+After changing `PRODUCTS` or `JOURNAL` in `app.js`, rebuild those pages:
+
+```
+pip install playwright && playwright install chromium
+python3 tools/build.py            # product-*.html, journal-*.html, head tags, sitemap.xml
+python3 tools/build.py --images   # also re-render the share images in img/og/
+```
+
+The build writes the description, canonical URL, Open Graph tags and structured data
+(Product, Article, Breadcrumb) into each page. `sitemap.xml` lists every page; submit it in Google Search Console.
+
+## Analytics
+
+The Google tag in each page's `<head>` sends data to GA4. `app.js` and `play.js` send these events:
+`view_item_list`, `select_item`, `view_item`, `add_to_cart`, `remove_from_cart`, `view_cart`, `begin_checkout`,
+`search`, `generate_lead`, `welcome_popup_view`, `welcome_popup_close`, `contact_form_submit`,
+`game_start`, `game_guide_select`, `game_place_visit`, `game_quests_open`, `game_complete`, `game_skip`.
+Campaign links keep their `utm_…` parameters when phones are forwarded from the game to the shop.
 
 ## Notes
 

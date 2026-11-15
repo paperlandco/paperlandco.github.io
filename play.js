@@ -132,9 +132,11 @@ function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.to
   let p=0;const iv=setInterval(()=>{p+=1;$('#lfill').style.width=(p*20)+'%';$('#lmsg').textContent=msgs[Math.min(p,msgs.length-1)];
     if(p>=5){clearInterval(iv);setTimeout(()=>{$('#loader').style.display='none';$('#startBtn').classList.add('on');$('#startBtn').focus()},300)}},380);
   $('#startBtn').onclick=start;
+  {const sk=document.querySelector('#title .skip');if(sk)sk.addEventListener('click',()=>track('game_skip'))}
   document.addEventListener('keydown',e=>{if($('#title').classList.contains('on')&&$('#startBtn').classList.contains('on')&&(e.key==='Enter'||e.key===' ')){e.preventDefault();start()}});
 })();
 function start(){
+  track('game_start',{returning:!!(save.guide&&GUIDES[save.guide])});
   try{AC=AC||new (window.AudioContext||window.webkitAudioContext)()}catch(e){}
   jingle();
   if(save.guide&&GUIDES[save.guide]) enterWorld(true); else openSelect();
@@ -149,7 +151,7 @@ function openSelect(){
   document.querySelectorAll('#guides canvas').forEach(c=>spriteCanvas(c,c.dataset.s));
   document.querySelectorAll('.guide').forEach(b=>{
     b.onmouseenter=()=>blip(880,.04);
-    b.onclick=()=>{save.guide=b.dataset.g;persist();blip(1047,.1);enterWorld(false)};
+    b.onclick=()=>{save.guide=b.dataset.g;track('game_guide_select',{guide:b.dataset.g});persist();blip(1047,.1);enterWorld(false)};
   });
   document.querySelector('.guide').focus();
 }
@@ -299,7 +301,9 @@ function walkTo(id){
   here=null;blip(523,.06);$('#hint').style.display='none';
 }
 function arrive(){here=target;const l=LOCS.find(x=>x.id===here);if(!l)return;
-  const first=!visited.has(l.id);visited.add(l.id);save.visited=[...visited];persist();refreshSpots();
+  const first=!visited.has(l.id);visited.add(l.id);track('game_place_visit',{place:l.name,first_visit:first,places_visited:visited.size});
+  if(first&&visited.size===LOCS.length)track('game_complete');
+ save.visited=[...visited];persist();refreshSpots();
   blip(784,.08);
   if(first&&visited.size===LOCS.length) setTimeout(()=>{fanfare();toast('★ Achievement unlocked!<small>Explorer of Paper Land — you visited every place.</small>')},900);
   openDialog(l);
@@ -336,7 +340,7 @@ function finishDialog(){
 }
 function item(id){
   const p=PRODUCTS[id],st=STATS[id]||['INSPIRATION +20'];
-  return `<div class="itm"><a class="art" href="product.html#${id}">${cover(id)}</a><h4>${titleOf(id)}</h4>
+  return `<div class="itm"><a class="art" href="${purl(id)}">${cover(id)}</a><h4>${titleOf(id)}</h4>
     <ul>${st.map(s=>`<li class="${/−/.test(s)?'dn':'up'}">${/−/.test(s)?'▼':'▲'} ${s}</li>`).join('')}</ul>
     <div class="buy"><b>${money(p.price)}</b><button class="pxbtn" data-add="${id}">+ Bag</button></div></div>`;
 }
@@ -365,7 +369,7 @@ function openQuests(){
     <div class="rew" id="qOk" style="display:none;margin-top:10px">You’re in the draw — good luck, adventurer!</div></div>
   <div class="quest complete"><span class="qtag done">Completed</span>
     <h3>The Grand Opening</h3><p>Paper Land opened its gates. Thanks for being one of the first visitors.</p></div>`;
-  $('#questPanel').classList.add('on');blip(659,.08);
+  $('#questPanel').classList.add('on');blip(659,.08);track('game_quests_open');
   $('#qExplore').onclick=closeQuests;
   $('#qForm').onsubmit=e=>{e.preventDefault();e.target.style.display='none';$('#qOk').style.display='block';coin()};
 }

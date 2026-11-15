@@ -9,7 +9,7 @@ const R = SHOPIFY ? {
   home:'/pages/home', shop:'/collections/all', product:h=>'/products/'+h, col:k=>'/collections/all#'+k,
   collections:'/collections', about:'/pages/about', journal:'/pages/journal', help:'/pages/help', faq:'/pages/help#faq', game:'/?play=1'
 } : {
-  home:'home.html', shop:'shop.html', product:h=>'product.html#'+h, col:k=>'shop.html#'+k,
+  home:'home.html', shop:'shop.html', product:h=>'product-'+h+'.html', col:k=>'shop.html#'+k,
   collections:'collections.html', about:'about.html', journal:'journal.html', help:'help.html', faq:'help.html#faq', game:'index.html?play=1'
 };
 const q=(s,el=document)=>el.querySelector(s), qa=(s,el=document)=>[...el.querySelectorAll(s)];
@@ -76,7 +76,9 @@ function renderSearch(){
   sRes.innerHTML=(t?'':'<div class="hint2">Popular right now</div>')+(ids.length?ids.slice(0,t?40:6).map(id=>`<a href="${R.product(id)}"><span class="thumb">${thumb(id)}</span><b>${titleOf(id)}</b><small>${money(PRODUCTS[id].price)}</small></a>`).join(''):`<div class="hint2">No notebooks match “${sIn.value}”.</div>`);
 }
 sIn.addEventListener('input',renderSearch);
-sRes.addEventListener('click',e=>{if(e.target.closest('a'))closeAll()});
+let lastTerm='';const logSearch=()=>{const t=sIn.value.trim().toLowerCase();if(t&&t!==lastTerm&&typeof track==='function'){lastTerm=t;track('search',{search_term:t})}};
+sRes.addEventListener('click',e=>{if(e.target.closest('a')){logSearch();closeAll()}});
+sIn.addEventListener('change',logSearch);
 function openSearch(){renderSearch();search.classList.add('on');setTimeout(()=>sIn.focus(),250)}
 
 /* ---------- cards: quick add + coming soon ---------- */

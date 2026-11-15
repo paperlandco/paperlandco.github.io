@@ -5,6 +5,8 @@
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  /* phones are sent from the game page to the shop: hand the original referrer to GA4 so the visit keeps its real source */
+  try{var plr=sessionStorage.getItem('pl-ref');if(plr!==null){sessionStorage.removeItem('pl-ref');if(plr)gtag('set','page_referrer',plr)}}catch(e){}
   gtag('js', new Date());
 </script>
 <!-- End Google Tag Manager -->

@@ -122,6 +122,12 @@ function checkoutUrl(){
   return lines.length?`https://${SHOPIFY.domain}/cart/${lines.join(',')}`:null;
 }
 const $ = (s,el=document)=>el.querySelector(s);
+/* every product and journal post has its own page (own URL, title and description — built by tools/build.py) */
+const purl = id => 'product-'+id+'.html';
+const jurl = k => 'journal-'+k+'.html';
+/* ---------- analytics (GA4 through the Google tag in <head>) ---------- */
+function track(name,params){try{window.dataLayer=window.dataLayer||[];(window.gtag||function(){dataLayer.push(arguments)})('event',name,params||{})}catch(e){}}
+const gaItem = (id,qty) => {const p=PRODUCTS[id],c=COLLECTIONS[p.col];return {item_id:id,item_name:titleOf(id),item_brand:p.brand||'Paper Land',item_category:c?c.name:'Gift Sets',price:p.price,quantity:qty||1}};
 const money = n => '$'+n.toFixed(2);
 const titleOf = id => { const p=PRODUCTS[id]; if(p.title) return p.title; if(p.set) return p.name; if(p.spiral) return 'Pocket Notes'; return p.name.replace(/\b\w/g,c=>c.toUpperCase())+' Notebook'; };
 
@@ -137,7 +143,7 @@ function cover(id){
 }
 function card(id){
   const p=PRODUCTS[id];
-  return `<div class="card"><a class="stage-link" href="product.html#${id}"><div class="stage">${p.tag?`<span class="tag">${p.tag}</span>`:''}${cover(id)}</div>
+  return `<div class="card"><a class="stage-link" href="${purl(id)}"><div class="stage">${p.tag?`<span class="tag">${p.tag}</span>`:''}${cover(id)}</div>
     <h3>${titleOf(id)}</h3></a><div class="meta">${p.brand?`by ${p.brand} · `:''}${p.fmt}${p.paper?' · '+p.paper:''}</div>
     <div class="row"><span class="price">${money(p.price)} AUD</span><button class="add" data-add="${id}">Add to Cart</button></div></div>`;
 }
@@ -204,10 +210,11 @@ function chrome(){
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){dd.classList.remove('open');closeCart()}});
   $('#burger').onclick=()=>$('#menu').classList.toggle('open');
   // newsletter
-  $('#clubForm').addEventListener('submit',e=>{e.preventDefault();e.target.style.display='none';$('#clubOk').style.display='block'});
+  $('#clubForm').addEventListener('submit',e=>{e.preventDefault();track('generate_lead',{lead_source:'footer_newsletter'});e.target.style.display='none';$('#clubOk').style.display='block'});
   // cart
   $('#cartOpen').onclick=openCart; $('#cartClose').onclick=closeCart; $('#scrim').onclick=closeCart;
-  $('#checkout').onclick=e=>{const u=checkoutUrl();if(!u){e.preventDefault();$('#msg').style.display='block'}};
+  $('#checkout').onclick=e=>{const u=checkoutUrl();if(!u){e.preventDefault();$('#msg').style.display='block';return}
+    const ids=Object.keys(cart).filter(id=>PRODUCTS[id]);track('begin_checkout',{currency:'AUD',value:ids.reduce((s,id)=>s+cart[id]*PRODUCTS[id].price,0),items:ids.map(id=>gaItem(id,cart[id]))})};
 }
 
 const DRAWER=`<div class="scrim" id="scrim"></div>
@@ -222,7 +229,8 @@ const DRAWER=`<div class="scrim" id="scrim"></div>
 function chromeBare(){
   document.body.insertAdjacentHTML('beforeend',DRAWER);
   $('#cartClose').onclick=closeCart; $('#scrim').onclick=closeCart;
-  $('#checkout').onclick=e=>{const u=checkoutUrl();if(!u){e.preventDefault();$('#msg').style.display='block'}};
+  $('#checkout').onclick=e=>{const u=checkoutUrl();if(!u){e.preventDefault();$('#msg').style.display='block';return}
+    const ids=Object.keys(cart).filter(id=>PRODUCTS[id]);track('begin_checkout',{currency:'AUD',value:ids.reduce((s,id)=>s+cart[id]*PRODUCTS[id].price,0),items:ids.map(id=>gaItem(id,cart[id]))})};
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCart()});
 }
 
@@ -230,9 +238,11 @@ function chromeBare(){
 let cart={};
 try{cart=JSON.parse(localStorage.getItem('pl-cart')||'{}')||{}}catch(e){cart={}}
 const saveCart=()=>{try{localStorage.setItem('pl-cart',JSON.stringify(cart))}catch(e){}};
-function openCart(){document.body.classList.add('cart-open')}
+function openCart(){document.body.classList.add('cart-open');
+  const ids=Object.keys(cart).filter(id=>PRODUCTS[id]);
+  track('view_cart',{currency:'AUD',value:ids.reduce((s,id)=>s+cart[id]*PRODUCTS[id].price,0),items:ids.map(id=>gaItem(id,cart[id]))})}
 function closeCart(){document.body.classList.remove('cart-open')}
-function addToCart(id,qty=1){cart[id]=(cart[id]||0)+qty;saveCart();drawCart()}
+function addToCart(id,qty=1){cart[id]=(cart[id]||0)+qty;saveCart();drawCart();track('add_to_cart',{currency:'AUD',value:PRODUCTS[id].price*qty,items:[gaItem(id,qty)]})}
 function drawCart(){
   const ids=Object.keys(cart).filter(id=>PRODUCTS[id]);
   const count=ids.reduce((s,id)=>s+cart[id],0);
@@ -243,15 +253,17 @@ function drawCart(){
   const left=Math.max(0,FREE_SHIP-sub);
   $('#ship').innerHTML=(left>0?`You're ${money(left)} away from free shipping.`:`You've unlocked free shipping.`)+`<div class="bar"><i style="width:${Math.min(100,sub/FREE_SHIP*100)}%"></i></div>`;
   $('#items').innerHTML=ids.length?ids.map(id=>{const p=PRODUCTS[id];const bg=p.imgs?`url(${p.imgs[0]}) center/cover`:p.set?PRODUCTS[p.set[0]].bg:p.bg;
-    return `<div class="item"><a href="product.html#${id}" class="sw" style="background:${bg}"></a><div><h5><a href="product.html#${id}">${titleOf(id)}</a></h5><small>${money(p.price)}</small>
+    return `<div class="item"><a href="${purl(id)}" class="sw" style="background:${bg}"></a><div><h5><a href="${purl(id)}">${titleOf(id)}</a></h5><small>${money(p.price)}</small>
     <div class="qty"><button data-q="-1" data-id="${id}" aria-label="Decrease">−</button>${cart[id]}<button data-q="1" data-id="${id}" aria-label="Increase">+</button></div></div>
     <strong style="font-weight:400">${money(p.price*cart[id])}</strong></div>`}).join(''):'<div class="empty">Your cart is empty — for now.</div>';
 }
 document.addEventListener('click',e=>{
+  const c=e.target.closest('.card a.stage-link, .itm a.art');
+  if(c){const m=(c.getAttribute('href')||'').match(/product-([a-z0-9-]+)\.html/);if(m&&PRODUCTS[m[1]])track('select_item',{item_list_id:document.body.dataset.page||'game',items:[gaItem(m[1])]})}
   const a=e.target.closest('[data-add]');
   if(a){addToCart(a.dataset.add);a.textContent='Added ✓';a.classList.add('done');setTimeout(()=>{a.textContent='Add to Cart';a.classList.remove('done')},1400)}
   const q=e.target.closest('[data-q]');
-  if(q){const id=q.dataset.id;cart[id]+= +q.dataset.q;if(cart[id]<=0)delete cart[id];saveCart();drawCart()}
+  if(q){const id=q.dataset.id;if(+q.dataset.q<0)track('remove_from_cart',{currency:'AUD',value:PRODUCTS[id].price,items:[gaItem(id,1)]});cart[id]+= +q.dataset.q;if(cart[id]<=0)delete cart[id];saveCart();drawCart()}
 });
 
 /* ---------- page: home ---------- */
@@ -267,8 +279,8 @@ function pageHome(){
   $('#jprev').innerHTML=Object.entries(JOURNAL).map(([k,j])=>postCard(k,j)).join('');
 }
 function postCard(k,j){
-  return `<article class="post"><a href="article.html#${k}"><div class="img" style="background:${j.bg}"><div class="glyph">${j.glyph}</div></div></a>
-    <div class="txt"><time>${j.date}</time> · <span class="cat">${j.cat}</span><h3><a href="article.html#${k}">${j.title}</a></h3><p>${j.lede}</p><a href="article.html#${k}" class="link">Read More</a></div></article>`;
+  return `<article class="post"><a href="${jurl(k)}"><div class="img" style="background:${j.bg}"><div class="glyph">${j.glyph}</div></div></a>
+    <div class="txt"><time>${j.date}</time> · <span class="cat">${j.cat}</span><h3><a href="${jurl(k)}">${j.title}</a></h3><p>${j.lede}</p><a href="${jurl(k)}" class="link">Read More</a></div></article>`;
 }
 
 /* ---------- page: shop ---------- */
@@ -283,6 +295,7 @@ function pageShop(){
     if(s==='high') ids.sort((a,b)=>PRODUCTS[b].price-PRODUCTS[a].price);
     $('#grid').innerHTML=ids.map(card).join('');
     $('#count').textContent=ids.length+' products';
+    track('view_item_list',{item_list_id:f,item_list_name:f==='all'?'Shop all':f==='sets'?'Gift sets':COLLECTIONS[f].name,items:ids.map((id,i)=>Object.assign(gaItem(id),{index:i}))});
     $('#shopTitle').textContent= f==='all'?'Shop all notebooks': f==='sets'?'Gift sets': COLLECTIONS[f].name;
   };
   window.addEventListener('hashchange',draw); $('#sort').onchange=draw; draw();
@@ -291,9 +304,11 @@ function pageShop(){
 /* ---------- page: product ---------- */
 function pageProduct(){
   const draw=()=>{
-    let id=location.hash.slice(1); if(!PRODUCTS[id]) id='iced-coffee';
+    const fixed=document.body.dataset.handle;
+    let id=fixed||location.hash.slice(1); if(!PRODUCTS[id]) id='iced-coffee';
     const p=PRODUCTS[id], col=COLLECTIONS[p.col];
-    document.title=titleOf(id)+' — Paper Land';
+    if(!fixed) document.title=titleOf(id)+' — Paper Land';
+    track('view_item',{currency:'AUD',value:p.price,items:[gaItem(id)]});
     const views=[cover(id)];
     if(p.imgs){views.length=0;views.push(...p.imgs.map(src=>img(src,titleOf(id))));}
     else if(p.brand){views.push(`<div class="spread"><div><em>${p.short.toLowerCase()}</em></div><div></div></div>`);}
@@ -354,14 +369,14 @@ function pageJournal(){
 }
 function pageArticle(){
   const draw=()=>{
-    const keys=Object.keys(JOURNAL); let k=location.hash.slice(1); if(!JOURNAL[k]) k=keys[0];
-    const j=JOURNAL[k]; document.title=j.title+' — Paper Land';
+    const keys=Object.keys(JOURNAL), fixed=document.body.dataset.handle; let k=fixed||location.hash.slice(1); if(!JOURNAL[k]) k=keys[0];
+    const j=JOURNAL[k]; if(!fixed) document.title=j.title+' — Paper Land';
     const next=keys[(keys.indexOf(k)+1)%keys.length];
     $('#article').innerHTML=`<div class="crumbs"><a href="home.html">Home</a> / <a href="journal.html">Journal</a></div>
       <div style="margin-top:30px"><time class="cat">${j.date}</time> · <span class="cat">${j.cat}</span></div>
       <h1>${j.title}</h1><div class="hero-img" style="background:${j.bg}"><div class="glyph">${j.glyph}</div></div>
       <p class="lede">${j.lede}</p><div class="body">${j.body}</div>
-      <div class="end"><a href="journal.html" class="link">← All Journal posts</a><a href="article.html#${next}" class="link">Next: ${JOURNAL[next].title} →</a></div>`;
+      <div class="end"><a href="journal.html" class="link">← All Journal posts</a><a href="${jurl(next)}" class="link">Next: ${JOURNAL[next].title} →</a></div>`;
     window.scrollTo(0,0);
   };
   window.addEventListener('hashchange',draw); draw();
@@ -369,7 +384,7 @@ function pageArticle(){
 
 /* ---------- page: help ---------- */
 function pageHelp(){
-  $('#cForm').addEventListener('submit',e=>{e.preventDefault();e.target.querySelectorAll('input,select,textarea,button').forEach(x=>x.disabled=true);$('#cOk').style.display='block'});
+  $('#cForm').addEventListener('submit',e=>{e.preventDefault();track('contact_form_submit');e.target.querySelectorAll('input,select,textarea,button').forEach(x=>x.disabled=true);$('#cOk').style.display='block'});
   if(location.hash){const t=document.getElementById(location.hash.slice(1)); if(t){if(t.tagName==='DETAILS')t.open=true;setTimeout(()=>t.scrollIntoView(),50)}}
 }
 
@@ -400,11 +415,11 @@ function welcome(){
   document.body.appendChild(w);
   const close=()=>{w.classList.remove('show');markWelcome();setTimeout(()=>w.remove(),350)};
   w.addEventListener('click',e=>{if(e.target===w)close()});
-  w.querySelector('.w-x').onclick=close; w.querySelector('.w-no').onclick=close;
+  w.querySelector('.w-x').onclick=()=>{track('welcome_popup_close');close()}; w.querySelector('.w-no').onclick=()=>{track('welcome_popup_close');close()};
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.contains(w))close()});
-  w.querySelector('.w-form').addEventListener('submit',e=>{e.preventDefault();markWelcome();w.classList.add('joined')});
+  w.querySelector('.w-form').addEventListener('submit',e=>{e.preventDefault();track('generate_lead',{lead_source:'welcome_popup'});markWelcome();w.classList.add('joined')});
   w.querySelector('.w-code').onclick=async e=>{const b=e.currentTarget;try{await navigator.clipboard.writeText(WELCOME_CODE);b.querySelector('small').textContent='copied ✓'}catch(err){b.querySelector('small').textContent='select & copy: '+WELCOME_CODE}};
-  setTimeout(()=>{w.classList.add('show');w.querySelector('input').focus({preventScroll:true})},WELCOME_DELAY);
+  setTimeout(()=>{track('welcome_popup_view');w.classList.add('show');w.querySelector('input').focus({preventScroll:true})},WELCOME_DELAY);
 }
 
 /* ---------- boot ---------- */

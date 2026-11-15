@@ -6,11 +6,17 @@
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  /* phones are sent from the game page to the shop: hand the original referrer to GA4 so the visit keeps its real source */
+  try{var plr=sessionStorage.getItem('pl-ref');if(plr!==null){sessionStorage.removeItem('pl-ref');if(plr)gtag('set','page_referrer',plr)}}catch(e){}
   gtag('js', new Date());
 </script>
 <!-- End Google Tag Manager -->
 
 <meta charset="utf-8">
+<!-- legacy:start -->
+<meta name="robots" content="noindex">
+<script>(function(){var h=location.hash.slice(1),ids=["iced-coffee","alleyway","street-food","arvo","brekkie","cuppa","someday","pocket-notes","saigon-set","arvo-set","crabit-liberica","crabit-robusta","crabit-excela","crabit-arabica","crabit-white-coffee","crabit-iced-black","crabit-coconut","crabit-iced-milk","crabit-americano","crabit-espresso","crabit-latte"];try{sessionStorage.setItem('pl-ref',document.referrer||'')}catch(e){}location.replace((ids.indexOf(h)>-1?'product-'+h+'.html':'shop.html')+location.search)})();</script>
+<!-- legacy:end -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Notebook — Paper Land</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,7 +37,7 @@
 </section>
 </main>
 <div id="site-footer"></div>
-<script src="app.js?v=202611091441"></script>
-<script src="mobile.js?v=202611091956"></script>
+<script src="app.js?v=202611152321"></script>
+<script src="mobile.js?v=202611152321"></script>
 </body>
 </html>
