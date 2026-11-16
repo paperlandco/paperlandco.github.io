@@ -184,7 +184,7 @@ def build_journal(D):
 def build_static(D):
     P, C, J, T = D['P'], D['C'], D['J'], D['T']
     org = {'@context': 'https://schema.org', '@graph': [
-        {'@type': 'Organization', '@id': BASE + '#org', 'name': SITE, 'url': BASE, 'logo': BASE + 'img/og/paper-land.jpg',
+        {'@type': 'Organization', '@id': BASE + '#org', 'name': SITE, 'url': BASE, 'logo': BASE + 'img/logo-512.png',
          'description': 'Design-led stationery brand. Hardcover notebooks with a word and its definition on the cover, designed in Adelaide and inspired by Saigon.'},
         {'@type': 'WebSite', '@id': BASE + '#site', 'name': SITE, 'url': BASE, 'inLanguage': 'en-AU', 'publisher': {'@id': BASE + '#org'}}]}
     shop_ld = {'@context': 'https://schema.org', '@type': 'ItemList', 'name': 'Paper Land shop', 'itemListElement': [
