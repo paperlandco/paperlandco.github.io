@@ -32,6 +32,9 @@ python3 tools/build.py            # product-*.html, journal-*.html, head tags, s
 python3 tools/build.py --images   # also re-render the share images in img/og/
 ```
 
+Pictures: `python3 tools/render_blog.py` draws the blog scenes into `img/blog/` (and their share images),
+`python3 tools/render_shots.py` draws product photos into `img/p/`. Both are illustrations built from the cover designs.
+
 The build writes the description, canonical URL, Open Graph tags and structured data
 (Product, Article, Breadcrumb) into each page. `sitemap.xml` lists every page; submit it in Google Search Console.
 

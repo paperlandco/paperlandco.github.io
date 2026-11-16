@@ -64,7 +64,7 @@ const PRODUCTS = {
 };
 
 const JOURNAL = {
-  'spiral-vs-hardcover-notebook':{title:'Spiral notebook or hardcover notebook? How to choose',date:'November 2026',cat:'Notebook Guides',glyph:'spiral',bg:'linear-gradient(135deg,#E9E2D6,#CDBFAB)',prods:['pocket-notes','iced-coffee','arvo'],
+  'spiral-vs-hardcover-notebook':{alt:'A black hardcover notebook and a small blue gingham spiral notebook on a desk',title:'Spiral notebook or hardcover notebook? How to choose',date:'November 2026',cat:'Notebook Guides',glyph:'spiral',bg:'linear-gradient(135deg,#E9E2D6,#CDBFAB)',prods:['pocket-notes','iced-coffee','arvo'],
     lede:'Spiral notebooks fold back and tear out clean. Hardcovers last and travel well. Here is how to pick the right one for lectures, lists, journals and gifts.',
     body:`<p>Walk into any newsagent and the notebook wall splits in two: spiral notebooks on one side, hardcover notebooks on the other. Both hold paper. They just suit different days. Here is how to choose between notebooks with a spiral binding and notebooks with a hard cover, without overthinking it.</p>
 <h2>What a spiral notebook does well</h2>
@@ -72,6 +72,7 @@ const JOURNAL = {
 <li><strong>It lies flat every time.</strong> The coil means no fighting the spine to keep a page open.</li>
 <li><strong>Pages come out easily.</strong> Good for to-do lists, shopping lists and notes you mean to hand to someone.</li>
 <li><strong>It is light.</strong> A spiral notebook is usually thinner and lighter than a hardcover with the same number of pages.</li></ul>
+<figure><img src="img/blog/spiral-pocket-notes-list.jpg" srcset="img/blog/spiral-pocket-notes-list-sm.jpg 750w, img/blog/spiral-pocket-notes-list.jpg 1500w" sizes="(max-width: 760px) 100vw, 720px" alt="A small square spiral notebook with a handwritten to-do list, next to a laptop" loading="lazy" width="1500" height="1000"><figcaption>A small spiral notebook earns its place as a list pad beside the laptop.</figcaption></figure>
 <p>The trade-offs: the coil can catch in a bag, pages can work loose at the holes over time, and many left-handed writers find a side coil gets in the way of their hand. A spiral bound at the top avoids that last one.</p>
 <h2>What a hardcover notebook does well</h2>
 <ul><li><strong>A rigid cover is a desk you carry.</strong> You can write on your lap, on a bench or standing up.</li>
@@ -96,7 +97,7 @@ const JOURNAL = {
 <p><strong>Do spiral notebooks lie flat?</strong> Yes. The coil lets every page lie flat and fold right back.</p>
 <p><strong>Are spiral notebooks good for left-handed writers?</strong> A side coil often gets in the way of a left hand. A top-bound spiral or a hardcover is usually more comfortable.</p>
 <p><strong>Is a hardcover notebook worth the extra cost?</strong> If you want to keep what you write, usually yes. If the notes are throwaway, a spiral notebook does the job.</p>`},
-  'notebook-paper-guide':{title:'Notebook paper explained: gsm, dot grid, lined or plain',date:'November 2026',cat:'Notebook Guides',glyph:'gsm',bg:'linear-gradient(135deg,#E3E7DC,#BFC9B1)',prods:['iced-coffee','street-food','cuppa'],
+  'notebook-paper-guide':{alt:'An open notebook with a dot grid page and a lined page, handwritten notes and a pen',title:'Notebook paper explained: gsm, dot grid, lined or plain',date:'November 2026',cat:'Notebook Guides',glyph:'gsm',bg:'linear-gradient(135deg,#E3E7DC,#BFC9B1)',prods:['iced-coffee','street-food','cuppa'],
     lede:'What the numbers on a paper notebook actually mean, and how to choose the right page for the way you write.',
     body:`<p>Two notebooks can look the same on a shelf and feel completely different the moment your pen touches the page. The difference is the paper. Here is what the numbers on a paper notebook mean, and how to choose notebook paper that suits the way you write.</p>
 <h2>What gsm means</h2>
@@ -111,6 +112,7 @@ const JOURNAL = {
 <ul><li><strong>Lined:</strong> rows for writing. Best for lecture notes, letters and long journal entries.</li>
 <li><strong>Dot grid:</strong> a light grid of dots, usually 5mm apart. It keeps your writing straight but stays out of the way for diagrams, tables and bullet journal layouts.</li>
 <li><strong>Plain:</strong> no guides at all. Best for sketching, mind maps and anyone who finds lines distracting.</li></ul>
+<figure><img src="img/blog/notebook-paper-rulings.jpg" srcset="img/blog/notebook-paper-rulings-sm.jpg 750w, img/blog/notebook-paper-rulings.jpg 1500w" sizes="(max-width: 760px) 100vw, 720px" alt="Three sheets of notebook paper side by side: dot grid, lined and plain" loading="lazy" width="1500" height="1000"><figcaption>Dot grid, lined and plain: the same paper, three different jobs.</figcaption></figure>
 <p>Not sure? Dot grid is the most flexible of the three. You can write in it like a lined notebook and draw in it like a plain one.</p>
 <h2>White or ivory paper?</h2>
 <p>Bright white paper gives the sharpest contrast. Ivory, or cream, paper is warmer and feels softer under bright light. It is mostly a matter of taste.</p>
@@ -124,7 +126,7 @@ const JOURNAL = {
 <p>If you searched for notebook paper to refill a ring binder, we do not sell loose-leaf sheets. Everything we make is bound into a notebook.</p>
 <h2>The paper in our notebooks</h2>
 <p>Our A5 hardcover notebooks have 160 numbered pages of 120gsm ivory paper, in three rulings: dot grid (<a href="product-iced-coffee.html">Iced Coffee</a>, <a href="product-arvo.html">Arvo</a>), lined (<a href="product-street-food.html">Street Food</a>, <a href="product-brekkie.html">Brekkie</a>) and plain (<a href="product-cuppa.html">Cuppa</a>). <a href="product-pocket-notes.html">Pocket Notes</a>, our small spiral notebook, uses 100gsm paper with a 5mm dot grid.</p>`},
-  'notebook-and-paper-gifts':{title:'Notebook and paper gifts for people who love to write',date:'November 2026',cat:'Gift Guides',glyph:'gift',bg:'linear-gradient(135deg,#EFE4D6,#D9BFA3)',prods:['saigon-set','arvo-set','someday','pocket-notes'],
+  'notebook-and-paper-gifts':{alt:'Three Saigon Mornings notebooks in a kraft gift box with a ribbon and a tag',title:'Notebook and paper gifts for people who love to write',date:'November 2026',cat:'Gift Guides',glyph:'gift',bg:'linear-gradient(135deg,#EFE4D6,#D9BFA3)',prods:['saigon-set','arvo-set','someday','pocket-notes'],
     lede:'A paper notebook is one of the easiest gifts to get right. Here is how to choose one by the person you are buying for.',
     body:`<p>A good notebook is personal without being risky. It needs no size, it does not go off, and most people who write by hand will use one. The trick is matching the notebook and paper to the person.</p>
 <h2>For the student</h2>
@@ -135,6 +137,7 @@ const JOURNAL = {
 <p>The <a href="product-saigon-set.html">Saigon Mornings Set</a> brings iced coffee, alleyway and street food together in one gift box. We also stock the Crabit Coffee Series, coffee-themed notebooks from the Vietnamese stationery brand Crabit, in the <a href="shop.html#crabit">shop</a>.</p>
 <h2>For someone who misses Australia</h2>
 <p>The <a href="product-arvo-set.html">Adelaide Arvo Set</a> puts three Aussie words on three covers: arvo, brekkie and cuppa. It travels well in a suitcase.</p>
+<figure><img src="img/blog/notebook-gifts-arvo-set.jpg" srcset="img/blog/notebook-gifts-arvo-set-sm.jpg 750w, img/blog/notebook-gifts-arvo-set.jpg 1500w" sizes="(max-width: 760px) 100vw, 720px" alt="The Arvo, Brekkie and Cuppa notebooks laid out with a gift tag" loading="lazy" width="1500" height="1000"><figcaption>The Adelaide Arvo Set: arvo, brekkie and cuppa.</figcaption></figure>
 <h2>For the sketcher</h2>
 <p>Plain pages and heavier paper. <a href="product-cuppa.html">Cuppa</a> has no lines and 120gsm ivory paper, so pencils and fineliners behave.</p>
 <h2>Make it personal</h2>
@@ -143,7 +146,7 @@ const JOURNAL = {
 <li>Add a pen they will actually use. Our <a href="blog-notebook-paper-guide.html">notebook paper guide</a> explains which pens suit which paper.</li></ul>
 <h2>Shipping</h2>
 <p>We ship Australia-wide from Adelaide, free on orders over $60. See the <a href="help.html">help page</a> for current dispatch times before you count on a delivery date.</p>`},
-  'why-saigon':{title:'Why our first collection starts in Saigon',date:'October 2026',cat:'Our Story',glyph:'coffee',bg:'linear-gradient(135deg,#E8DCCD,#D7C3AE)',
+  'why-saigon':{alt:'The Iced Coffee notebook on a red plastic stool beside a glass of iced coffee',title:'Why our first collection starts in Saigon',date:'October 2026',cat:'Our Story',glyph:'coffee',bg:'linear-gradient(135deg,#E8DCCD,#D7C3AE)',
     lede:'Every brand has to start somewhere. Ours started on a plastic stool, with an iced coffee and a notebook full of plans.',
     body:`<p>Paper Land is designed in Adelaide, but the idea began in Saigon — a city that wakes up early, loudly, and with a coffee in hand. Mornings there run on small rituals: the same café, the same stool, the same order, and a few minutes to write down what the day needs to become.</p>
 <p>We wanted our first notebooks to hold on to that feeling. So instead of a logo on the front, each cover carries a single word and a short definition — the way you'd actually explain that word to a friend.</p>
@@ -151,7 +154,7 @@ const JOURNAL = {
 <p><strong>Iced coffee</strong> is the start. <strong>Alleyway</strong> is the detour where the good ideas hide. <strong>Street food</strong> is the reward — a little bit of everything, with crunch. Together they make the Saigon Mornings collection.</p>
 <h2>Why bring it to Australia?</h2>
 <p>Because the ritual travels. An Adelaide morning looks different — a flat white instead of an iced coffee, a tram instead of a motorbike — but the habit of sitting down and writing out the day is the same. Our second collection, Adelaide Arvo, is the other half of that story.</p>`},
-  'arvo-reset':{title:'The five-minute arvo reset',date:'September 2026',cat:'How To',glyph:'arvo',bg:'linear-gradient(135deg,#D9DFD0,#B9C4AD)',
+  'arvo-reset':{alt:'An open notebook with a Done, Next, Later, Cuppa layout beside a cup of tea and biscuits',title:'The five-minute arvo reset',date:'September 2026',cat:'How To',glyph:'arvo',bg:'linear-gradient(135deg,#D9DFD0,#B9C4AD)',
     lede:'A one-page spread for the 3pm slump: what is done, what is next, and what can honestly wait.',
     body:`<p>Around mid-afternoon, most to-do lists stop being useful. Some tasks are finished, some have changed, and a few were never going to happen today. The arvo reset is a quick way to take stock without starting a whole new list.</p>
 <h2>The spread</h2>
@@ -160,7 +163,7 @@ const JOURNAL = {
 <li><strong>Later.</strong> Move everything else to a "maybe-tomorrow" list — without guilt.</li>
 <li><strong>Cuppa.</strong> Put the kettle on. This step is not optional.</li></ol>
 <p>Dot grid pages work best because you can draw three quick boxes and fill them in. Five minutes, one page, and the rest of the afternoon feels lighter.</p>`},
-  'bullet-journal':{title:'Starting a bullet journal in ten minutes',date:'August 2026',cat:'How To',glyph:'someday',bg:'linear-gradient(135deg,#E4E7EF,#C3CCDD)',
+  'bullet-journal':{alt:'An open dot grid notebook with an index page and a six-month future log',title:'Starting a bullet journal in ten minutes',date:'August 2026',cat:'How To',glyph:'someday',bg:'linear-gradient(135deg,#E4E7EF,#C3CCDD)',
     lede:'No stencils, no perfect lettering, no forty-page setup. A beginner layout you can copy tonight.',
     body:`<p>Bullet journaling has a reputation for being complicated. It doesn't need to be. All you need is a dotted notebook, a pen, and ten minutes.</p>
 <h2>The four pages to start with</h2>
@@ -205,6 +208,7 @@ const $ = (s,el=document)=>el.querySelector(s);
 const purl = id => 'product-'+id+'.html';
 const jurl = k => 'blog-'+k+'.html';
 const slug = t => t.toLowerCase().replace(/<[^>]+>/g,'').replace(/&[a-z]+;/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const bimg = (k,alt,big) => `<img class="pimg" src="img/blog/${k}${big?'':'-sm'}.jpg" srcset="img/blog/${k}-sm.jpg 750w, img/blog/${k}.jpg 1500w" sizes="${big?'(max-width: 760px) 100vw, 720px':'(max-width: 760px) 100vw, 640px'}" alt="${alt}" ${big?'':'loading="lazy" '}width="1500" height="1000">`;
 const readMins = j => Math.max(1,Math.round(j.body.replace(/<[^>]+>/g,' ').split(/\s+/).filter(Boolean).length/200));
 /* ---------- analytics (GA4 through the Google tag in <head>) ---------- */
 function track(name,params){try{window.dataLayer=window.dataLayer||[];(window.gtag||function(){dataLayer.push(arguments)})('event',name,params||{})}catch(e){}}
@@ -213,6 +217,8 @@ const money = n => '$'+n.toFixed(2);
 const titleOf = id => { const p=PRODUCTS[id]; if(p.title) return p.title; if(p.set) return p.name; if(p.spiral) return 'Pocket Notes'; return p.name.replace(/\b\w/g,c=>c.toUpperCase())+' Notebook'; };
 
 /* ---------- covers ---------- */
+/* product photos: real ones where we have them, otherwise the rendered shots in img/p/ (tools/render_shots.py) */
+const shots = id => PRODUCTS[id].imgs ? [] : Array.from({length:PRODUCTS[id].set?2:4},(_,i)=>`img/p/${id}-${i+1}.jpg`);
 const img = (src,alt) => `<img class="pimg" src="${src}" alt="${alt}" loading="lazy">`;
 function cover(id){
   const p=PRODUCTS[id];
@@ -222,9 +228,10 @@ function cover(id){
   if(p.spiral) return `<div class="nb spiral gingham"><div class="w">pocket notes</div></div>`;
   return `<div class="nb ${p.dark?'dark':''}" style="background:${p.bg}"><div class="w">${p.name}</div><div class="ph"><span>${p.ph}</span><span>noun</span></div><div class="rule"></div><div class="def">${p.def}</div></div>`;
 }
+const hov = id => { const s=PRODUCTS[id].imgs?PRODUCTS[id].imgs[1]:shots(id)[0]; return s?`<img class="pimg hov" src="${s}" alt="" loading="lazy">`:''; };
 function card(id){
   const p=PRODUCTS[id];
-  return `<div class="card"><a class="stage-link" href="${purl(id)}"><div class="stage">${p.tag?`<span class="tag">${p.tag}</span>`:''}${cover(id)}</div>
+  return `<div class="card"><a class="stage-link" href="${purl(id)}"><div class="stage">${p.tag?`<span class="tag">${p.tag}</span>`:''}${cover(id)}${hov(id)}</div>
     <h3>${titleOf(id)}</h3></a><div class="meta">${p.brand?`by ${p.brand} · `:''}${p.fmt}${p.paper?' · '+p.paper:''}</div>
     <div class="row"><span class="price">${money(p.price)} AUD</span><button class="add" data-add="${id}">Add to Cart</button></div></div>`;
 }
@@ -354,7 +361,7 @@ function pageHome(){
   $('#storyVis').innerHTML=cover('iced-coffee')+cover('arvo');
 }
 function postCard(k,j){
-  return `<article class="post" data-cat="${slug(j.cat)}"><a href="${jurl(k)}"><div class="img" style="background:${j.bg}"><div class="glyph">${j.glyph}</div></div></a>
+  return `<article class="post" data-cat="${slug(j.cat)}"><a href="${jurl(k)}" tabindex="-1" aria-hidden="true"><div class="img" style="background:${j.bg}">${bimg(k,'')}</div></a>
     <div class="txt"><time>${j.date}</time> · <span class="cat">${j.cat}</span> · <span class="rt">${readMins(j)} min read</span><h3><a href="${jurl(k)}">${j.title}</a></h3><p>${j.lede}</p><a href="${jurl(k)}" class="link">Read More</a></div></article>`;
 }
 
@@ -384,12 +391,16 @@ function pageProduct(){
     const p=PRODUCTS[id], col=COLLECTIONS[p.col];
     if(!fixed) document.title=titleOf(id)+' — Paper Land';
     track('view_item',{currency:'AUD',value:p.price,items:[gaItem(id)]});
+    const ph=shots(id).map((src,i)=>img(src,`${titleOf(id)}, photo ${i+1}`));
     const views=[cover(id)];
     if(p.imgs){views.length=0;views.push(...p.imgs.map(src=>img(src,titleOf(id))));}
     else if(p.brand){views.push(`<div class="spread"><div><em>${p.short.toLowerCase()}</em></div><div></div></div>`);}
     else if(!p.set){views.push(`<div class="spread"><div><em>${p.spiral?'notes':p.name}</em></div><div></div></div>`);
       views.push(p.spiral?cover(id):`<div class="nb back ${p.dark?'dark':''}" style="background:${p.bg}"><div class="label"><b>Paper Land</b>${p.fmt.split(' · ')[0]}<br>${p.ruling}</div></div>`);}
     else views.push(...p.set.map(cover));
+    if(ph.length){ /* cover first, then the photos, then the drawn views */
+      const rest=views.slice(1), order=ph.length===4?[ph[0],ph[2],rest[0],ph[1],ph[3]]:[...ph,...rest];
+      views.splice(1,views.length,...order.filter(Boolean)); views.splice(6); }
     let qty=1;
     $('#pdp').innerHTML=`
       <div class="gallery"><div class="main" id="main">${views[0]}</div>
@@ -461,7 +472,7 @@ function articleHTML(k){
   const prods=(j.prods||[]).filter(id=>PRODUCTS[id]);
   return `<div class="crumbs"><a href="home.html">Home</a> / <a href="blog.html">Blog</a> / <a href="blog.html#${slug(j.cat)}">${j.cat}</a></div>
     <div style="margin-top:30px"><time class="cat">${j.date}</time> · <span class="cat">${j.cat}</span> · <span class="cat">${readMins(j)} min read</span></div>
-    <h1>${j.title}</h1><div class="hero-img" style="background:${j.bg}"><div class="glyph">${j.glyph}</div></div>
+    <h1>${j.title}</h1><div class="hero-img" style="background:${j.bg}">${bimg(k,j.alt||j.title,true)}</div>
     <p class="lede">${j.lede}</p>${toc}<div class="body">${body}</div>
     ${prods.length?`<section class="inpost"><h2>Notebooks in this post</h2><div class="grid">${prods.map(card).join('')}</div></section>`:''}
     <div class="end"><a href="blog.html" class="link">← All posts</a><a href="${jurl(next)}" class="link">Next: ${JOURNAL[next].title} →</a></div>`;

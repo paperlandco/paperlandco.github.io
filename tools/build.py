@@ -169,7 +169,7 @@ def build_journal(D):
         image = f'img/og/journal-{k}.jpg'
         words = len(strip_tags(j['body']).split())
         ld = [{'@context': 'https://schema.org', '@type': 'BlogPosting', 'headline': j['title'], 'description': strip_tags(j['lede']),
-               'image': [BASE + image], 'datePublished': journal_date(j['date']), 'articleSection': j['cat'], 'wordCount': words,
+               'image': [BASE + f'img/blog/{k}.jpg', BASE + image], 'datePublished': journal_date(j['date']), 'articleSection': j['cat'], 'wordCount': words,
                'inLanguage': 'en-AU', 'author': {'@type': 'Organization', 'name': SITE, 'url': BASE},
                'publisher': {'@type': 'Organization', 'name': SITE, 'url': BASE, 'logo': {'@type': 'ImageObject', 'url': BASE + 'img/logo-512.png'}},
                'mainEntityOfPage': BASE + f},
@@ -276,7 +276,8 @@ async def build_images(pw, D):
         await shot(pid, inner, col['bg'] if col else '#F4EEE4')
     for k, j in J.items():
         inner = f'<div class="txt"><div class="eb">{esc(SITE)} Journal · {esc(j["cat"])}</div><h1>{esc(j["title"])}</h1><p>{esc(strip_tags(j["lede"]))}</p></div>{brand}'
-        await shot('journal-' + k, inner, j['bg'], 'wide')
+        if not os.path.exists(os.path.join(ROOT, 'img', 'blog', k + '.jpg')):   # posts with a scene use it (tools/render_blog.py)
+            await shot('journal-' + k, inner, j['bg'], 'wide')
     trio = ''
     for i in ('alleyway', 'iced-coffee', 'arvo'):
         trio += '<div class="card"><div class="stage">' + await pg.evaluate('id=>cover(id)', i) + '</div></div>'
