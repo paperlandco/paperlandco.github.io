@@ -9,7 +9,7 @@ Run from the repo root after changing PRODUCTS / JOURNAL in app.js:
 What it does
   * product-<id>.html   one real page per product (own URL, title, description,
                         Open Graph tags, Product structured data)
-  * journal-<id>.html   one real page per journal post
+  * blog-<id>.html      one real page per blog post (old journal-<id>.html addresses redirect)
   * a "seo" block in the <head> of every page (description, canonical, share tags)
   * sitemap.xml
   * img/og/*.jpg        1200x630 share images (with --images)
@@ -29,15 +29,15 @@ PAGES = {  # file -> (title, description, og image)
     'index.html': ('Enter Paper Land — notebooks designed in Adelaide',
                    'Step into Paper Land, a pixel-art island where every stop is a notebook collection. Explore Saigon Mornings and Adelaide Arvo, or skip straight to the shop.'),
     'home.html': ('Paper Land — Notebooks for slow mornings',
-                  'Hardcover notebooks with a single word and its definition on the cover. Designed in Adelaide, inspired by Saigon mornings. Free shipping over $60.'),
-    'shop.html': ('Shop all notebooks, planners and gift sets — Paper Land',
-                  'Shop every Paper Land notebook: A5 hardcovers, undated planners, pocket notes, gift sets and the Crabit Coffee Series. Free shipping over $60 in Australia.'),
+                  'Hardcover paper notebooks with a single word and its definition on the cover. Designed in Adelaide, inspired by Saigon mornings. Free shipping over $60.'),
+    'shop.html': ('Shop paper notebooks, spiral notebooks and planners | Paper Land',
+                  'A5 hardcover paper notebooks with 120gsm pages, a small spiral notebook, undated planners and gift sets. Dot grid, lined or plain. Free shipping over $60.'),
     'collections.html': ('Collections — Saigon Mornings, Adelaide Arvo and more | Paper Land',
                          'Browse Paper Land by collection: Saigon Mornings, Adelaide Arvo, Someday Studio and the Crabit Coffee Series from Vietnam.'),
     'about.html': ('Our Story — Paper Land',
                    'The story behind Paper Land: a stationery brand designed in Adelaide and inspired by the morning coffee ritual of Saigon.'),
-    'journal.html': ('Journal — journaling ideas and stories | Paper Land',
-                     'Notes from Paper Land: simple journaling how-tos, bullet journal layouts and the stories behind each notebook collection.'),
+    'blog.html': ('Blog — notebook guides and journaling ideas | Paper Land',
+                  'Notebook guides from Paper Land: spiral vs hardcover, notebook paper and gsm explained, gift ideas, journaling how-tos and the stories behind our notebooks.'),
     'help.html': ('Help, shipping and contact — Paper Land',
                   'Shipping, returns, FAQs and contact details for Paper Land. Standard shipping $9.95 Australia-wide, free over $60, with 30-day returns.'),
 }
@@ -105,7 +105,9 @@ async def extract(pw):
     pg = await b.new_page()
     await pg.goto('file://' + os.path.join(ROOT, 'shop.html'))
     data = await pg.evaluate('''() => ({P: PRODUCTS, C: COLLECTIONS, J: JOURNAL,
-        T: Object.fromEntries(Object.keys(PRODUCTS).map(id => [id, titleOf(id)]))})''')
+        T: Object.fromEntries(Object.keys(PRODUCTS).map(id => [id, titleOf(id)])),
+        A: Object.fromEntries(Object.keys(JOURNAL).map(k => [k, articleHTML(k)])),
+        BL: blogListHTML()})''')
     await b.close()
     return data
 
@@ -125,7 +127,9 @@ def build_products(D):
         colname = col['name'] if col else 'Gift Sets'
         fmt = p['fmt'].split(' · ')[0]
         title = f"{title_txt} — {fmt} | {SITE}"
-        if len(title) > 65:
+        if p.get('seo'):
+            title = f"{p['seo']} | {SITE}"
+        elif len(title) > 65:
             title = f"{title_txt} | {SITE}"
         lead = f"{p['name']} {p['ph']}, noun: {p['def']} " if p.get('def') else ''
         desc = clip(lead + p['desc'])
@@ -158,27 +162,36 @@ def journal_date(s):
 def build_journal(D):
     tpl = strip_legacy(read('article.html'))
     J = D['J']
-    keys = list(J)
     for k, j in J.items():
-        f = f'journal-{k}.html'
-        title = f"{j['title']} | {SITE} Journal"
+        f = f'blog-{k}.html'
+        title = f"{j['title']} | {SITE}"
         desc = clip(j['lede'])
         image = f'img/og/journal-{k}.jpg'
-        ld = [{'@context': 'https://schema.org', '@type': 'Article', 'headline': j['title'], 'description': strip_tags(j['lede']),
-               'image': [BASE + image], 'datePublished': journal_date(j['date']), 'articleSection': j['cat'],
-               'author': {'@type': 'Organization', 'name': SITE, 'url': BASE},
-               'publisher': {'@type': 'Organization', 'name': SITE, 'url': BASE}, 'mainEntityOfPage': BASE + f},
-              crumbs_ld([('Journal', 'journal.html'), (j['title'], f)])]
+        words = len(strip_tags(j['body']).split())
+        ld = [{'@context': 'https://schema.org', '@type': 'BlogPosting', 'headline': j['title'], 'description': strip_tags(j['lede']),
+               'image': [BASE + image], 'datePublished': journal_date(j['date']), 'articleSection': j['cat'], 'wordCount': words,
+               'inLanguage': 'en-AU', 'author': {'@type': 'Organization', 'name': SITE, 'url': BASE},
+               'publisher': {'@type': 'Organization', 'name': SITE, 'url': BASE, 'logo': {'@type': 'ImageObject', 'url': BASE + 'img/logo-512.png'}},
+               'mainEntityOfPage': BASE + f},
+              crumbs_ld([('Blog', 'blog.html'), (j['title'], f)])]
         page = apply_head(tpl, title, seo_block(f, title, desc, image, 'article', '', ld))
         page = page.replace('<body data-page="article">', f'<body data-page="article" data-handle="{k}">', 1)
-        nxt = keys[(keys.index(k) + 1) % len(keys)]
-        static = (f'<div class="crumbs"><a href="home.html">Home</a> / <a href="journal.html">Journal</a></div>'
-                  f'<div style="margin-top:30px"><time class="cat">{esc(j["date"])}</time> · <span class="cat">{esc(j["cat"])}</span></div>'
-                  f'<h1>{esc(j["title"])}</h1><p class="lede">{j["lede"]}</p><div class="body">{j["body"]}</div>'
-                  f'<div class="end"><a href="journal.html" class="link">← All Journal posts</a><a href="journal-{nxt}.html" class="link">Next: {esc(J[nxt]["title"])} →</a></div>')
-        page = set_between(page, '<article class="article" id="article">', '</article>', static)
+        page = set_between(page, '<article class="article" id="article">', '</article>', D['A'][k])
         write(f, page)
-    return [f'journal-{k}.html' for k in J]
+    return [f'blog-{k}.html' for k in J]
+
+
+def build_redirects(D):
+    """The blog used to be called Journal: keep the old addresses working."""
+    def stub(target, title):
+        return ('<!doctype html>\n<html lang="en"><head><meta charset="utf-8">\n'
+                f'<title>{esc(title)}</title>\n<link rel="canonical" href="{BASE}{target}">\n<meta name="robots" content="noindex">\n'
+                f'<meta http-equiv="refresh" content="0; url={target}">\n'
+                f"<script>try{{sessionStorage.setItem('pl-ref',document.referrer||'')}}catch(e){{}}location.replace('{target}'+location.search+location.hash)</script>\n"
+                f'</head><body><p>This page has moved to <a href="{target}">{esc(title)}</a>.</p></body></html>\n')
+    write('journal.html', stub('blog.html', 'Paper Land Blog'))
+    for k in ('why-saigon', 'arvo-reset', 'bullet-journal'):   # posts that were published as journal-<id>.html
+        write(f'journal-{k}.html', stub(f'blog-{k}.html', D['J'][k]['title']))
 
 
 def build_static(D):
@@ -196,13 +209,11 @@ def build_static(D):
             cards = ''.join(f'<div class="card"><a class="stage-link" href="product-{pid}.html"><h3>{esc(T[pid])}</h3></a>'
                             f'<div class="row"><span class="price">${p["price"]:.2f} AUD</span></div></div>' for pid, p in P.items())
             page = set_between(page, '<div class="grid" id="grid" style="padding-bottom:100px">', '</div>\n</section>', cards)
-        if f == 'journal.html':
-            posts = ''.join(f'<article class="post"><div class="txt"><time>{esc(j["date"])}</time> · <span class="cat">{esc(j["cat"])}</span>'
-                            f'<h3><a href="journal-{k}.html">{esc(j["title"])}</a></h3><p>{j["lede"]}</p></div></article>' for k, j in J.items())
-            page = set_between(page, '<div class="jlist" id="jlist">', '</div>\n</section>', posts)
+        if f == 'blog.html':
+            page = set_between(page, '<div class="jlist" id="jlist">', '</div>\n</section>', D['BL'])
         write(f, page)
     # old hash URLs (product.html#arvo, article.html#why-saigon) forward to the new pages
-    for f, prefix, ids, home in (('product.html', 'product-', list(P), 'shop.html'), ('article.html', 'journal-', list(J), 'journal.html')):
+    for f, prefix, ids, home in (('product.html', 'product-', list(P), 'shop.html'), ('article.html', 'blog-', list(J), 'blog.html')):
         legacy = ('<!-- legacy:start -->\n<meta name="robots" content="noindex">\n<script>(function(){var h=location.hash.slice(1),ids=' + json.dumps(ids, separators=(',', ':'))
                   + f";try{{sessionStorage.setItem('pl-ref',document.referrer||'')}}catch(e){{}}location.replace((ids.indexOf(h)>-1?'{prefix}'+h+'.html':'{home}')+location.search)}})();</script>\n<!-- legacy:end -->")
         page = strip_legacy(read(f))
@@ -211,7 +222,7 @@ def build_static(D):
 
 
 def build_sitemap(files):
-    urls = ['', 'home.html', 'shop.html', 'collections.html', 'about.html', 'journal.html', 'help.html'] + files
+    urls = ['', 'home.html', 'shop.html', 'collections.html', 'about.html', 'blog.html', 'help.html'] + files
     body = ''.join(f'  <url><loc>{BASE}{u}</loc><lastmod>{TODAY}</lastmod></url>\n' for u in urls)
     write('sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + body + '</urlset>\n')
     return len(urls)
@@ -281,10 +292,11 @@ async def main():
         D = await extract(pw)
         build_static(D)
         files = build_products(D) + build_journal(D)
+        build_redirects(D)
         n = build_sitemap(files)
         if '--images' in sys.argv:
             await build_images(pw, D)
-    print(f'built {len(D["P"])} product pages, {len(D["J"])} journal pages, sitemap with {n} urls' + (', share images' if '--images' in sys.argv else ''))
+    print(f'built {len(D["P"])} product pages, {len(D["J"])} blog posts, sitemap with {n} urls' + (', share images' if '--images' in sys.argv else ''))
 
 
 if __name__ == '__main__':

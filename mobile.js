@@ -10,7 +10,7 @@ const R = SHOPIFY ? {
   collections:'/collections', about:'/pages/about', journal:'/pages/journal', help:'/pages/help', faq:'/pages/help#faq', game:'/?play=1'
 } : {
   home:'home.html', shop:'shop.html', product:h=>'product-'+h+'.html', col:k=>'shop.html#'+k,
-  collections:'collections.html', about:'about.html', journal:'journal.html', help:'help.html', faq:'help.html#faq', game:'index.html?play=1'
+  collections:'collections.html', about:'about.html', journal:'blog.html', help:'help.html', faq:'help.html#faq', game:'index.html?play=1'
 };
 const q=(s,el=document)=>el.querySelector(s), qa=(s,el=document)=>[...el.querySelectorAll(s)];
 const ICON={
@@ -55,7 +55,7 @@ menu.innerHTML=`<div class="dh"><b>Paper Land</b><button aria-label="Close">×</
     ${Object.entries(COLLECTIONS).map(([k,c])=>`<a href="${R.col(k)}">${c.name}</a>`).join('')}
     <a href="${R.col('sets')}">Gift Sets</a><a href="${R.collections}">All collections</a></div></details>
   <a class="big" href="${R.about}">Our story <span>→</span></a>
-  <a class="big" href="${R.journal}">Journal <span>→</span></a>
+  <a class="big" href="${R.journal}">Blog <span>→</span></a>
   <a class="big" href="${R.help}">Help &amp; contact <span>→</span></a>
   <a class="play" href="${R.game}"><span>▶ PLAY</span> Explore Paper Land as a game</a>
   <div class="foot">Free shipping Australia-wide over $${typeof FREE_SHIP!=='undefined'?FREE_SHIP:60}<br>Designed in Adelaide · Inspired by Saigon</div></div>`;

@@ -28,7 +28,7 @@ const PRODUCTS = {
     desc:'Deep olive with plain pages — no lines, no dots, no rules. For sketching, lettering and thinking out loud between meetings.'},
   'someday':{name:'someday',ph:'[sum-day]',def:'The day all of these notes finally turn into plans. Undated, so it can start today.',bg:C.dusk,col:'studio',price:42,fmt:'A5 undated planner · 12 months',ruling:'Monthly + weekly spreads',tag:'Planner',
     desc:'An undated 12-month planner with monthly calendars, weekly spreads and dot grid notes pages. Start in any month and skip a week without wasting a page.'},
-  'pocket-notes':{name:'pocket notes',spiral:1,col:'studio',price:14,fmt:'10 × 10 cm spiral · 80 pages',ruling:'5mm dot grid',bg:C.dusk,
+  'pocket-notes':{name:'pocket notes',spiral:1,seo:'Pocket Notes — Small Spiral Notebook, 10 × 10 cm',col:'studio',price:14,fmt:'10 × 10 cm spiral · 80 pages',ruling:'5mm dot grid',bg:C.dusk,
     desc:'A small square spiral notebook in blue gingham. Fits in a bag, a coat pocket or beside the laptop for quick lists and phone numbers.'},
   'saigon-set':{name:'Saigon Mornings Set',set:['iced-coffee','alleyway','street-food'],col:'sets',price:89,fmt:'3 × A5 notebooks · gift box',tag:'Save $13',
     desc:'All three Saigon Mornings notebooks — iced coffee, alleyway and street food — packed together in a recycled kraft gift box.'},
@@ -64,6 +64,85 @@ const PRODUCTS = {
 };
 
 const JOURNAL = {
+  'spiral-vs-hardcover-notebook':{title:'Spiral notebook or hardcover notebook? How to choose',date:'November 2026',cat:'Notebook Guides',glyph:'spiral',bg:'linear-gradient(135deg,#E9E2D6,#CDBFAB)',prods:['pocket-notes','iced-coffee','arvo'],
+    lede:'Spiral notebooks fold back and tear out clean. Hardcovers last and travel well. Here is how to pick the right one for lectures, lists, journals and gifts.',
+    body:`<p>Walk into any newsagent and the notebook wall splits in two: spiral notebooks on one side, hardcover notebooks on the other. Both hold paper. They just suit different days. Here is how to choose between notebooks with a spiral binding and notebooks with a hard cover, without overthinking it.</p>
+<h2>What a spiral notebook does well</h2>
+<ul><li><strong>It folds back on itself.</strong> A spiral notebook opens a full 360 degrees, so you can write on one page with the rest of the book folded behind it. Handy on a crowded lecture desk or a train.</li>
+<li><strong>It lies flat every time.</strong> The coil means no fighting the spine to keep a page open.</li>
+<li><strong>Pages come out easily.</strong> Good for to-do lists, shopping lists and notes you mean to hand to someone.</li>
+<li><strong>It is light.</strong> A spiral notebook is usually thinner and lighter than a hardcover with the same number of pages.</li></ul>
+<p>The trade-offs: the coil can catch in a bag, pages can work loose at the holes over time, and many left-handed writers find a side coil gets in the way of their hand. A spiral bound at the top avoids that last one.</p>
+<h2>What a hardcover notebook does well</h2>
+<ul><li><strong>A rigid cover is a desk you carry.</strong> You can write on your lap, on a bench or standing up.</li>
+<li><strong>It protects the pages.</strong> Corners stay square in a bag full of keys and chargers.</li>
+<li><strong>It lasts.</strong> A bound notebook keeps a year of notes together, which is why journals, planners and keepsakes are almost always hardcover.</li>
+<li><strong>Lay-flat binding closes the gap.</strong> A well-bound hardcover opens flat too. It just does not fold all the way back.</li></ul>
+<h2>Spiral vs hardcover at a glance</h2>
+<table><thead><tr><th></th><th>Spiral notebook</th><th>Hardcover notebook</th></tr></thead><tbody>
+<tr><td>Opens flat</td><td>Yes, and folds back 360°</td><td>Yes, if the binding is lay-flat</td></tr>
+<tr><td>Writing without a desk</td><td>Harder if the cover is soft</td><td>Easy, the cover is rigid</td></tr>
+<tr><td>Tearing pages out</td><td>Easy</td><td>Possible, but it shows</td></tr>
+<tr><td>Life in a busy bag</td><td>The coil can snag or bend</td><td>Holds up well</td></tr>
+<tr><td>Best for</td><td>Lectures, lists, scrap work</td><td>Journals, planners, gifts</td></tr></tbody></table>
+<h2>Which one should you buy?</h2>
+<ul><li><strong>For uni lectures:</strong> either works. Pick a spiral notebook if you like folding it back on a small desk, a hardcover if you want a whole term of notes to stay together.</li>
+<li><strong>For a daily journal or planner:</strong> hardcover. It stays neat for the whole year.</li>
+<li><strong>For quick lists and phone numbers:</strong> a small spiral notebook that lives beside the laptop or in a coat pocket.</li>
+<li><strong>As a gift:</strong> hardcover. It feels like a keepsake rather than supplies.</li></ul>
+<h2>What we make</h2>
+<p>Most Paper Land notebooks are A5 hardcovers with lay-flat binding and 160 numbered pages of 120gsm ivory paper. We make one spiral notebook: <a href="product-pocket-notes.html">Pocket Notes</a>, a 10 × 10 cm square with 80 pages of 5mm dot grid, made for lists rather than long entries.</p>
+<h2>Quick answers</h2>
+<p><strong>Do spiral notebooks lie flat?</strong> Yes. The coil lets every page lie flat and fold right back.</p>
+<p><strong>Are spiral notebooks good for left-handed writers?</strong> A side coil often gets in the way of a left hand. A top-bound spiral or a hardcover is usually more comfortable.</p>
+<p><strong>Is a hardcover notebook worth the extra cost?</strong> If you want to keep what you write, usually yes. If the notes are throwaway, a spiral notebook does the job.</p>`},
+  'notebook-paper-guide':{title:'Notebook paper explained: gsm, dot grid, lined or plain',date:'November 2026',cat:'Notebook Guides',glyph:'gsm',bg:'linear-gradient(135deg,#E3E7DC,#BFC9B1)',prods:['iced-coffee','street-food','cuppa'],
+    lede:'What the numbers on a paper notebook actually mean, and how to choose the right page for the way you write.',
+    body:`<p>Two notebooks can look the same on a shelf and feel completely different the moment your pen touches the page. The difference is the paper. Here is what the numbers on a paper notebook mean, and how to choose notebook paper that suits the way you write.</p>
+<h2>What gsm means</h2>
+<p>GSM stands for grams per square metre: how much a sheet of that paper would weigh at one square metre. Higher numbers mean heavier, usually thicker paper.</p>
+<ul><li><strong>Around 80gsm:</strong> everyday printer paper. Fine for pencil and ballpoint, but most ink shows through.</li>
+<li><strong>Around 100gsm:</strong> a step up. Gel pens and fineliners behave better.</li>
+<li><strong>120gsm and above:</strong> noticeably thicker. Less show-through, and more forgiving with fountain pens, highlighters and brush pens.</li></ul>
+<p>Heavier paper has one cost: the same number of pages makes a thicker, heavier notebook.</p>
+<h2>Show-through and bleed-through</h2>
+<p><strong>Show-through</strong>, sometimes called ghosting, is when you can see writing from the other side of the page. <strong>Bleed-through</strong> is when ink soaks right through and marks the next page. Thicker, smoother paper reduces both. Test a new pen on the back page first.</p>
+<h2>Lined, dot grid or plain?</h2>
+<ul><li><strong>Lined:</strong> rows for writing. Best for lecture notes, letters and long journal entries.</li>
+<li><strong>Dot grid:</strong> a light grid of dots, usually 5mm apart. It keeps your writing straight but stays out of the way for diagrams, tables and bullet journal layouts.</li>
+<li><strong>Plain:</strong> no guides at all. Best for sketching, mind maps and anyone who finds lines distracting.</li></ul>
+<p>Not sure? Dot grid is the most flexible of the three. You can write in it like a lined notebook and draw in it like a plain one.</p>
+<h2>White or ivory paper?</h2>
+<p>Bright white paper gives the sharpest contrast. Ivory, or cream, paper is warmer and feels softer under bright light. It is mostly a matter of taste.</p>
+<h2>Which paper for which pen</h2>
+<p>A notebook with paper that suits your pen saves a lot of frustration. As a rough guide:</p>
+<table><thead><tr><th>Pen</th><th>Paper that works</th></tr></thead><tbody>
+<tr><td>Pencil, ballpoint</td><td>Anything from 80gsm</td></tr>
+<tr><td>Gel pen, fineliner</td><td>100gsm and up</td></tr>
+<tr><td>Fountain pen, highlighter, brush pen</td><td>120gsm and up, and test the back page first</td></tr></tbody></table>
+<h2>Looking for loose notebook paper?</h2>
+<p>If you searched for notebook paper to refill a ring binder, we do not sell loose-leaf sheets. Everything we make is bound into a notebook.</p>
+<h2>The paper in our notebooks</h2>
+<p>Our A5 hardcover notebooks have 160 numbered pages of 120gsm ivory paper, in three rulings: dot grid (<a href="product-iced-coffee.html">Iced Coffee</a>, <a href="product-arvo.html">Arvo</a>), lined (<a href="product-street-food.html">Street Food</a>, <a href="product-brekkie.html">Brekkie</a>) and plain (<a href="product-cuppa.html">Cuppa</a>). <a href="product-pocket-notes.html">Pocket Notes</a>, our small spiral notebook, uses 100gsm paper with a 5mm dot grid.</p>`},
+  'notebook-and-paper-gifts':{title:'Notebook and paper gifts for people who love to write',date:'November 2026',cat:'Gift Guides',glyph:'gift',bg:'linear-gradient(135deg,#EFE4D6,#D9BFA3)',prods:['saigon-set','arvo-set','someday','pocket-notes'],
+    lede:'A paper notebook is one of the easiest gifts to get right. Here is how to choose one by the person you are buying for.',
+    body:`<p>A good notebook is personal without being risky. It needs no size, it does not go off, and most people who write by hand will use one. The trick is matching the notebook and paper to the person.</p>
+<h2>For the student</h2>
+<p>A lined A5 notebook for lecture notes, and something small for to-do lists. <a href="product-street-food.html">Street Food</a> and <a href="product-brekkie.html">Brekkie</a> are lined. <a href="product-pocket-notes.html">Pocket Notes</a> is a small spiral notebook that sits beside a laptop.</p>
+<h2>For the planner</h2>
+<p>An undated planner is safer than a dated one: they can start it the day they open it, not only in January. <a href="product-someday.html">Someday</a> covers 12 months with no dates printed.</p>
+<h2>For the coffee lover</h2>
+<p>The <a href="product-saigon-set.html">Saigon Mornings Set</a> brings iced coffee, alleyway and street food together in one gift box. We also stock the Crabit Coffee Series, coffee-themed notebooks from the Vietnamese stationery brand Crabit, in the <a href="shop.html#crabit">shop</a>.</p>
+<h2>For someone who misses Australia</h2>
+<p>The <a href="product-arvo-set.html">Adelaide Arvo Set</a> puts three Aussie words on three covers: arvo, brekkie and cuppa. It travels well in a suitcase.</p>
+<h2>For the sketcher</h2>
+<p>Plain pages and heavier paper. <a href="product-cuppa.html">Cuppa</a> has no lines and 120gsm ivory paper, so pencils and fineliners behave.</p>
+<h2>Make it personal</h2>
+<ul><li>Write a short note on the first page. It turns a notebook into a keepsake.</li>
+<li>Choose the word on the cover for the person: <em>brekkie</em> for the early riser, <em>someday</em> for the dreamer.</li>
+<li>Add a pen they will actually use. Our <a href="blog-notebook-paper-guide.html">notebook paper guide</a> explains which pens suit which paper.</li></ul>
+<h2>Shipping</h2>
+<p>We ship Australia-wide from Adelaide, free on orders over $60. See the <a href="help.html">help page</a> for current dispatch times before you count on a delivery date.</p>`},
   'why-saigon':{title:'Why our first collection starts in Saigon',date:'October 2026',cat:'Our Story',glyph:'coffee',bg:'linear-gradient(135deg,#E8DCCD,#D7C3AE)',
     lede:'Every brand has to start somewhere. Ours started on a plastic stool, with an iced coffee and a notebook full of plans.',
     body:`<p>Paper Land is designed in Adelaide, but the idea began in Saigon — a city that wakes up early, loudly, and with a coffee in hand. Mornings there run on small rituals: the same café, the same stool, the same order, and a few minutes to write down what the day needs to become.</p>
@@ -124,7 +203,9 @@ function checkoutUrl(){
 const $ = (s,el=document)=>el.querySelector(s);
 /* every product and journal post has its own page (own URL, title and description — built by tools/build.py) */
 const purl = id => 'product-'+id+'.html';
-const jurl = k => 'journal-'+k+'.html';
+const jurl = k => 'blog-'+k+'.html';
+const slug = t => t.toLowerCase().replace(/<[^>]+>/g,'').replace(/&[a-z]+;/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const readMins = j => Math.max(1,Math.round(j.body.replace(/<[^>]+>/g,' ').split(/\s+/).filter(Boolean).length/200));
 /* ---------- analytics (GA4 through the Google tag in <head>) ---------- */
 function track(name,params){try{window.dataLayer=window.dataLayer||[];(window.gtag||function(){dataLayer.push(arguments)})('event',name,params||{})}catch(e){}}
 const gaItem = (id,qty) => {const p=PRODUCTS[id],c=COLLECTIONS[p.col];return {item_id:id,item_name:titleOf(id),item_brand:p.brand||'Paper Land',item_category:c?c.name:'Gift Sets',price:p.price,quantity:qty||1}};
@@ -165,7 +246,7 @@ function chrome(){
           <a href="shop.html#sets"><small>Gift Sets</small>Starter Sets</a>
         </div></li>
       ${a('about.html','About','about')}
-      ${a('journal.html','Journal','journal')}
+      ${a('blog.html','Blog','journal')}
       ${a('help.html','Help','help')}
       <li><a href="index.html" class="play-link">▶ Play</a></li>
     </ul>
@@ -189,7 +270,7 @@ function chrome(){
         <p style="margin-top:14px">hello@paperland.com.au</p></div>
       <div><h4>Shop</h4><ul><li><a href="shop.html">Shop All</a></li><li><a href="collections.html#saigon">Saigon Mornings</a></li><li><a href="collections.html#adelaide">Adelaide Arvo</a></li><li><a href="collections.html#studio">Someday Studio</a></li><li><a href="collections.html#crabit">Crabit Coffee Series</a></li><li><a href="shop.html#sets">Gift Sets</a></li></ul></div>
       <div><h4>Help</h4><ul><li><a href="help.html#shipping">Shipping &amp; Returns</a></li><li><a href="help.html#stockists">Stockists</a></li><li><a href="help.html#contact">Contact Us</a></li><li><a href="help.html#faq">FAQ</a></li></ul></div>
-      <div><h4>Paper Land</h4><ul><li><a href="about.html">Our Story</a></li><li><a href="journal.html">Journal</a></li><li><a href="https://www.instagram.com/">Instagram</a></li><li><a href="https://www.tiktok.com/">TikTok</a></li></ul></div>
+      <div><h4>Paper Land</h4><ul><li><a href="about.html">Our Story</a></li><li><a href="blog.html">Blog</a></li><li><a href="https://www.instagram.com/">Instagram</a></li><li><a href="https://www.tiktok.com/">TikTok</a></li></ul></div>
     </div>
     <div class="fbase"><span>© 2026 Paper Land. All rights reserved.</span><span>Privacy Policy · Terms of Use</span></div>
   </div></footer>
@@ -273,8 +354,8 @@ function pageHome(){
   $('#storyVis').innerHTML=cover('iced-coffee')+cover('arvo');
 }
 function postCard(k,j){
-  return `<article class="post"><a href="${jurl(k)}"><div class="img" style="background:${j.bg}"><div class="glyph">${j.glyph}</div></div></a>
-    <div class="txt"><time>${j.date}</time> · <span class="cat">${j.cat}</span><h3><a href="${jurl(k)}">${j.title}</a></h3><p>${j.lede}</p><a href="${jurl(k)}" class="link">Read More</a></div></article>`;
+  return `<article class="post" data-cat="${slug(j.cat)}"><a href="${jurl(k)}"><div class="img" style="background:${j.bg}"><div class="glyph">${j.glyph}</div></div></a>
+    <div class="txt"><time>${j.date}</time> · <span class="cat">${j.cat}</span> · <span class="rt">${readMins(j)} min read</span><h3><a href="${jurl(k)}">${j.title}</a></h3><p>${j.lede}</p><a href="${jurl(k)}" class="link">Read More</a></div></article>`;
 }
 
 /* ---------- page: shop ---------- */
@@ -357,23 +438,43 @@ function pageCollections(){
 function pageAbout(){ $('#storyVis').innerHTML=cover('iced-coffee')+cover('arvo'); }
 
 /* ---------- page: journal ---------- */
+/* blog list (also called by tools/build.py for the static copy) */
+function blogListHTML(){
+  return Object.entries(JOURNAL).map(([k,j],i)=>postCard(k,j).replace('class="post"',i===0?'class="post feature"':'class="post"')).join('');
+}
 function pageJournal(){
-  const e=Object.entries(JOURNAL);
-  $('#jlist').innerHTML=e.map(([k,j],i)=>postCard(k,j).replace('class="post"',i===0?'class="post feature"':'class="post"')).join('');
+  const cats=[...new Set(Object.values(JOURNAL).map(j=>j.cat))];
+  $('#bchips').innerHTML=`<a href="#" data-c="">All</a>`+cats.map(c=>`<a href="#${slug(c)}" data-c="${slug(c)}">${c}</a>`).join('');
+  $('#jlist').innerHTML=blogListHTML();
+  const draw=()=>{const c=location.hash.slice(1);
+    document.querySelectorAll('#bchips a').forEach(x=>x.classList.toggle('on',x.dataset.c===c));
+    document.querySelectorAll('#jlist .post').forEach(p=>p.hidden=!!c&&p.dataset.cat!==c);
+    $('#jlist').classList.toggle('filtered',!!c);};
+  window.addEventListener('hashchange',draw); draw();
+}
+/* one blog post (also called by tools/build.py for the static copy) */
+function articleHTML(k){
+  const keys=Object.keys(JOURNAL), j=JOURNAL[k], next=keys[(keys.indexOf(k)+1)%keys.length];
+  const heads=[...j.body.matchAll(/<h2>(.*?)<\/h2>/g)].map(m=>m[1]);
+  const body=j.body.replace(/<h2>(.*?)<\/h2>/g,(m,t)=>`<h2 id="${slug(t)}">${t}</h2>`);
+  const toc=heads.length>=3?`<nav class="toc" aria-label="In this post"><b>In this post</b><ol>${heads.map(t=>`<li><a href="#${slug(t)}">${t}</a></li>`).join('')}</ol></nav>`:'';
+  const prods=(j.prods||[]).filter(id=>PRODUCTS[id]);
+  return `<div class="crumbs"><a href="home.html">Home</a> / <a href="blog.html">Blog</a> / <a href="blog.html#${slug(j.cat)}">${j.cat}</a></div>
+    <div style="margin-top:30px"><time class="cat">${j.date}</time> · <span class="cat">${j.cat}</span> · <span class="cat">${readMins(j)} min read</span></div>
+    <h1>${j.title}</h1><div class="hero-img" style="background:${j.bg}"><div class="glyph">${j.glyph}</div></div>
+    <p class="lede">${j.lede}</p>${toc}<div class="body">${body}</div>
+    ${prods.length?`<section class="inpost"><h2>Notebooks in this post</h2><div class="grid">${prods.map(card).join('')}</div></section>`:''}
+    <div class="end"><a href="blog.html" class="link">← All posts</a><a href="${jurl(next)}" class="link">Next: ${JOURNAL[next].title} →</a></div>`;
 }
 function pageArticle(){
   const draw=()=>{
     const keys=Object.keys(JOURNAL), fixed=document.body.dataset.handle; let k=fixed||location.hash.slice(1); if(!JOURNAL[k]) k=keys[0];
-    const j=JOURNAL[k]; if(!fixed) document.title=j.title+' — Paper Land';
-    const next=keys[(keys.indexOf(k)+1)%keys.length];
-    $('#article').innerHTML=`<div class="crumbs"><a href="home.html">Home</a> / <a href="journal.html">Journal</a></div>
-      <div style="margin-top:30px"><time class="cat">${j.date}</time> · <span class="cat">${j.cat}</span></div>
-      <h1>${j.title}</h1><div class="hero-img" style="background:${j.bg}"><div class="glyph">${j.glyph}</div></div>
-      <p class="lede">${j.lede}</p><div class="body">${j.body}</div>
-      <div class="end"><a href="journal.html" class="link">← All Journal posts</a><a href="${jurl(next)}" class="link">Next: ${JOURNAL[next].title} →</a></div>`;
-    window.scrollTo(0,0);
+    if(!fixed) document.title=JOURNAL[k].title+' — Paper Land';
+    $('#article').innerHTML=articleHTML(k);
+    if(!location.hash||!fixed) window.scrollTo(0,0);
   };
-  window.addEventListener('hashchange',draw); draw();
+  if(!document.body.dataset.handle) window.addEventListener('hashchange',draw);
+  draw();
 }
 
 /* ---------- page: help ---------- */

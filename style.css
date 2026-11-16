@@ -526,3 +526,33 @@ body{font-weight:400;font-size:15px;letter-spacing:-.005em}
   .b-story{grid-template-columns:1fr;gap:26px;padding-top:48px;padding-bottom:56px}
   .b-story-vis{min-height:240px}
 }
+
+/* ---------- blog ---------- */
+.bchips{display:flex;flex-wrap:wrap;gap:8px;padding:0 0 30px}
+.bchips a{display:inline-flex;align-items:center;min-height:40px;padding:0 16px;border:1px solid var(--line);border-radius:999px;font-size:13px;transition:.2s}
+.bchips a:hover{border-color:var(--ink)}
+.bchips a.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.jlist.filtered .post.feature{grid-column:auto;display:block;margin-bottom:0}
+.jlist.filtered .post.feature .img{margin-bottom:18px}
+.jlist.filtered .post.feature h3{font-size:25px}
+.post .rt{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+.article .toc{border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin:0 0 32px;font-size:15px}
+.article .toc b{display:block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px;font-weight:600}
+.article .toc ol{margin:0;padding-left:20px}.article .toc li{margin:4px 0}
+.article .toc a{border-bottom:1px solid var(--line)}
+.article .body h2{scroll-margin-top:110px}
+.article .body a{border-bottom:1px solid currentColor}
+.article .body table{width:100%;border-collapse:collapse;margin:6px 0 26px;font-size:15px}
+.article .body th,.article .body td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
+.article .body thead th{border-bottom:1px solid var(--ink);font-weight:600}
+.article .inpost{margin-top:48px;padding-top:28px;border-top:1px solid var(--line)}
+.article .inpost h2{font-size:22px;font-weight:500;margin-bottom:18px}
+.article .inpost .grid{grid-template-columns:repeat(3,1fr);gap:18px;padding-bottom:0}
+.seo-copy{max-width:760px;padding-bottom:90px;color:var(--ink-soft);font-size:15px;line-height:1.75}
+.seo-copy h2{font-size:22px;font-weight:500;color:var(--ink);margin-bottom:12px}
+.seo-copy p{margin-bottom:12px}.seo-copy a{color:var(--ink);border-bottom:1px solid var(--line)}
+@media (max-width:760px){
+  .article .body table{font-size:13.5px}.article .body th,.article .body td{padding:8px 6px}
+  .article .inpost .grid{grid-template-columns:1fr 1fr}
+  .seo-copy{padding:10px 16px 70px}
+}

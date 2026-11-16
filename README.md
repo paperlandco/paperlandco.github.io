@@ -12,7 +12,7 @@ Website for Paper Land, a design-led stationery brand: notebooks, planners and p
 | `product-<id>.html` | Product detail, one real page per product, e.g. `product-arvo.html` (old `product.html#arvo` links forward here) |
 | `collections.html` | Saigon Mornings, Adelaide Arvo, Someday Studio |
 | `about.html` | Our story |
-| `journal.html` / `journal-<id>.html` | Journal list and one real page per post |
+| `blog.html` / `blog-<id>.html` | Blog list (category filter) and one page per post; old `journal-*.html` links redirect |
 | `help.html` | FAQ, shipping, contact, stockists |
 
 Shared files: `style.css` holds all styling. `app.js` holds the header, footer, cart and all product and journal data.
