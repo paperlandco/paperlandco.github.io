@@ -19,7 +19,7 @@ Needs: pip install playwright && playwright install chromium
 import asyncio, datetime, html, json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE = 'https://trinhquocnam2002-max.github.io/paper-land-2/'
+BASE = 'https://paperlandco.github.io/'
 SITE = 'Paper Land'
 TODAY = datetime.date.today().isoformat()
 FONT_DIR = os.environ.get('PL_FONT_DIR', '')          # optional: local @fontsource folder when offline
