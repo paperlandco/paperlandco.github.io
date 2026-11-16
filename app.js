@@ -228,10 +228,19 @@ function cover(id){
   if(p.spiral) return `<div class="nb spiral gingham"><div class="w">pocket notes</div></div>`;
   return `<div class="nb ${p.dark?'dark':''}" style="background:${p.bg}"><div class="w">${p.name}</div><div class="ph"><span>${p.ph}</span><span>noun</span></div><div class="rule"></div><div class="def">${p.def}</div></div>`;
 }
-const hov = id => { const s=PRODUCTS[id].imgs?PRODUCTS[id].imgs[1]:shots(id)[0]; return s?`<img class="pimg hov" src="${s}" alt="" loading="lazy">`:''; };
+/* a notebook that opens: hover (desktop), scroll into view (phones) or tap (product page) and the cover swings open while the pages flip */
+const canOpen = id => { const p=PRODUCTS[id]; return !p.imgs && !p.brand && !p.set; };
+function book(id){
+  const p=PRODUCTS[id], r=/dot/.test(p.ruling||'')?'dots':/lined/.test(p.ruling||'')?'lines':/plain/.test(p.ruling||'')?'plain':'dots';
+  const c=p.spiral?'#B9C6DA':p.bg;
+  const pg=[0,1,2,3].map(i=>`<i class="ob-pg p${i}"><b class="f r-${r}"></b><b class="b r-${r}"></b></i>`).join('');
+  return `<div class="ob${p.spiral?' sq':''}" data-id="${id}" style="--c:${c}"><div class="ob-in"><i class="ob-block r-${r}"></i>${pg}<i class="ob-cv"><b class="f">${cover(id)}</b><b class="b"><span><small>Paper Land</small>${p.spiral?'notes':p.name}</span></b></i></div></div>`;
+}
+const peek = id => { window.__peeked=window.__peeked||{}; if(!__peeked[id]){__peeked[id]=1; track('notebook_peek',{item_id:id});} };
+const hov = id => { if(canOpen(id)) return ''; const s=PRODUCTS[id].imgs?PRODUCTS[id].imgs[1]:shots(id)[0]; return s?`<img class="pimg hov" src="${s}" alt="" loading="lazy">`:''; };
 function card(id){
   const p=PRODUCTS[id];
-  return `<div class="card"><a class="stage-link" href="${purl(id)}"><div class="stage">${p.tag?`<span class="tag">${p.tag}</span>`:''}${cover(id)}${hov(id)}</div>
+  return `<div class="card"><a class="stage-link" href="${purl(id)}"><div class="stage">${p.tag?`<span class="tag">${p.tag}</span>`:''}${canOpen(id)?book(id):cover(id)}${hov(id)}</div>
     <h3>${titleOf(id)}</h3></a><div class="meta">${p.brand?`by ${p.brand} · `:''}${p.fmt}${p.paper?' · '+p.paper:''}</div>
     <div class="row"><span class="price">${money(p.price)} AUD</span><button class="add" data-add="${id}">Add to Cart</button></div></div>`;
 }
@@ -345,6 +354,12 @@ function drawCart(){
     <div class="qty"><button data-q="-1" data-id="${id}" aria-label="Decrease">−</button>${cart[id]}<button data-q="1" data-id="${id}" aria-label="Increase">+</button></div></div>
     <strong style="font-weight:400">${money(p.price*cart[id])}</strong></div>`}).join(''):'<div class="empty">Your cart is empty — for now.</div>';
 }
+document.addEventListener('mouseover',e=>{const o=e.target.closest&&e.target.closest('.card .ob');if(o&&matchMedia('(hover:hover)').matches)peek(o.dataset.id)});
+if('IntersectionObserver' in window && matchMedia('(hover:none)').matches){
+  const io=new IntersectionObserver(es=>es.forEach(en=>{en.target.classList.toggle('on',en.isIntersecting);if(en.isIntersecting)peek(en.target.dataset.id)}),{rootMargin:'-38% 0px -38% 0px'});
+  const watch=()=>document.querySelectorAll('.card .ob:not([data-w])').forEach(o=>{o.dataset.w=1;io.observe(o)});
+  new MutationObserver(watch).observe(document.documentElement,{childList:true,subtree:true}); watch();
+}
 document.addEventListener('click',e=>{
   const c=e.target.closest('.card a.stage-link, .itm a.art, .b-fan a');
   if(c){const m=(c.getAttribute('href')||'').match(/product-([a-z0-9-]+)\.html/);if(m&&PRODUCTS[m[1]])track('select_item',{item_list_id:document.body.dataset.page||'game',items:[gaItem(m[1])]})}
@@ -401,9 +416,10 @@ function pageProduct(){
     if(ph.length){ /* cover first, then the photos, then the drawn views */
       const rest=views.slice(1), order=ph.length===4?[ph[0],ph[2],rest[0],ph[1],ph[3]]:[...ph,...rest];
       views.splice(1,views.length,...order.filter(Boolean)); views.splice(6); }
+    const main0=canOpen(id)?book(id)+`<span class="ob-hint">${matchMedia('(hover:hover)').matches?'Hover':'Tap'} to look inside</span>`:views[0];
     let qty=1;
     $('#pdp').innerHTML=`
-      <div class="gallery"><div class="main" id="main">${views[0]}</div>
+      <div class="gallery"><div class="main" id="main">${main0}</div>
         <div class="thumbs" style="grid-template-columns:repeat(${views.length},1fr)">${views.map((v,i)=>`<button data-v="${i}" class="${i?'':'on'}" aria-label="View ${i+1}">${v.replace('class="spread"','class="spread small"')}</button>`).join('')}</div></div>
       <div class="info">
         <div class="eyebrow">${col?`<a href="collections.html#${p.col}">${col.name}</a>`:'<a href="shop.html#sets">Gift Sets</a>'}</div>
@@ -422,7 +438,9 @@ function pageProduct(){
         <details><summary>Shipping &amp; Returns</summary><div class="body">Standard shipping $9.95 Australia-wide, free over $${FREE_SHIP}. Unused items can be returned within 30 days. <a href="help.html#shipping" style="border-bottom:1px solid">Full policy</a>.</div></details>
         <details><summary>Paper &amp; Pens</summary><div class="body">Tested with gel, ballpoint, pencil and fine fountain pens. Very wet markers may show through — try them on the last page first.</div></details>
       </div>`;
-    document.querySelectorAll('.thumbs button').forEach(b=>b.onclick=()=>{$('#main').innerHTML=views[b.dataset.v];document.querySelectorAll('.thumbs button').forEach(x=>x.classList.toggle('on',x===b))});
+    document.querySelectorAll('.thumbs button').forEach(b=>b.onclick=()=>{$('#main').innerHTML=+b.dataset.v===0?main0:views[b.dataset.v];document.querySelectorAll('.thumbs button').forEach(x=>x.classList.toggle('on',x===b))});
+    $('#main').onclick=e=>{const o=$('#main .ob');if(o){o.classList.toggle('on');peek(id);}};
+    $('#main').onmouseenter=()=>{if($('#main .ob')&&matchMedia('(hover:hover)').matches)peek(id)};
     $('#minus').onclick=()=>{qty=Math.max(1,qty-1);$('#qty').textContent=qty};
     $('#plus').onclick=()=>{qty++;$('#qty').textContent=qty};
     $('#buy').onclick=()=>{addToCart(id,qty);openCart()};
