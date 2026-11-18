@@ -618,3 +618,8 @@ body{font-weight:400;font-size:15px;letter-spacing:-.005em}
 @keyframes obp3{0%,25%{transform:rotateY(0)}37%,70%{transform:rotateY(-177.2deg)}79%,100%{transform:rotateY(0)}}
 @media (max-width:760px){.gallery .main .ob{width:46%}}
 @media (prefers-reduced-motion:reduce){.ob,.ob-cv{transition:none}.ob .ob-pg{animation:none!important}}
+
+/* product 'About this notebook' copy */
+.about .body p,.pdp .about p{margin:0 0 12px}
+.about .body p:last-child{margin-bottom:0}
+.pdp .about h2{font-size:14px;letter-spacing:.12em;text-transform:uppercase;margin:24px 0 10px}

@@ -63,6 +63,84 @@ const PRODUCTS = {
     desc:'From Crabit’s Coffeeine line: a soft beige hardcover with a dictionary-style definition of the latte, an elastic closure and dotted pages.'},
 };
 
+/* ---- Longer product copy (SEO + buyers' questions). Rendered by productMoreHTML(id). ---- */
+const PRODUCT_MORE = {
+  'iced-coffee':[
+    `Iced Coffee is the notebook that started Paper Land. The name comes from cà phê sữa đá, the strong, sweet iced coffee that Saigon runs on before 7am, and the cover is meant to feel like that first quiet half-hour: charcoal, calm and a little bit serious about the day ahead.`,
+    `Inside are 5mm dot grid pages, which makes it one of the most flexible notebooks we make. Use it as a bullet journal, a daily planner, a place for morning pages, or a work notebook where meeting notes, quick tables and small sketches can sit side by side without lines getting in the way. If you are choosing your first A5 dot grid notebook in Australia and want something that looks good on a desk and still feels like a tool, this is the one we would start with.`],
+  'alleyway':[
+    `Saigon's alleyways, the hẻm that run behind the main streets, are where the city is most itself: tiny cafés, washing lines, a noodle cart that has been in the same spot for twenty years. Alleyway is our notebook for that side of life, in a warm terracotta hardcover.`,
+    `The 5mm dot grid pages suit people who never use a notebook the same way twice. One page is a shopping list, the next is a sketch of a doorway, the next is a half-finished idea for a side project. Dots give you enough structure to keep handwriting straight and draw neat boxes, but disappear once you start drawing. It works well as a sketchbook-journal for travel, a creative ideas notebook, or a gift for someone who doodles in the margins of everything.`],
+  'street-food':[
+    `Street Food is named for the plastic-stool meals that make Saigon famous: bánh mì at the corner, bún bò from a cart, a little bit of everything. The soft sand cover is the lightest in the Saigon Mornings collection.`,
+    `It is also our classic lined notebook, with 7mm ruled pages, which is the most comfortable spacing for everyday handwriting. That makes it a good choice for long-form journaling, recipe collections, travel diaries, uni lecture notes or letters you draft before you send. If you have tried a dot grid notebook and found yourself wishing for lines, start here. Pair it with Iced Coffee or Alleyway in the Saigon Mornings Set if you want one notebook for writing and one for planning.`],
+  'arvo':[
+    `Arvo is Australian for afternoon, and the notebook is made for the slower half of the day: the hour after lunch when the to-do list gets honestly renegotiated. Its sage green cover takes its colour from the Adelaide Hills in late afternoon light.`,
+    `The 5mm dot grid pages make Arvo a natural bullet journal or weekly planner. Draw your own spreads, track habits, plan the week on a Sunday arvo, or keep a running list of what can wait until tomorrow. Because it is designed in Adelaide, it also makes a thoughtful gift for someone moving away from South Australia, or a souvenir for visitors who want something more useful than a fridge magnet.`],
+  'brekkie':[
+    `Brekkie is the bright one of the Adelaide Arvo collection: a cream hardcover named after the most important meal of a slow weekend. It is designed to be the notebook you open first, before the emails and the group chats.`,
+    `Inside are 7mm lined pages, ideal for morning journaling, gratitude lists, weekly goals and reflective writing. Lined pages keep longer entries tidy, so Brekkie works well if you like to write in full sentences rather than bullet points. It also makes a good everyday notebook for study notes in a single subject.`],
+  'cuppa':[
+    `Cuppa is named for the small pause Australians take between everything else, and the notebook is built around the same idea: space to think. The deep olive cover is the darkest in the Adelaide Arvo collection.`,
+    `Its pages are plain, with no lines, dots or grid. That makes Cuppa our pick for sketching, hand lettering, mind maps, mood boards and visual thinking, or for anyone who simply finds lines distracting. If you want a hardcover A5 sketchbook-style notebook that still feels right in a meeting, Cuppa is it. For a mix of writing and drawing, team it with Arvo (dot grid) and Brekkie (lined) in the Adelaide Arvo Set.`],
+  'someday':[
+    `Someday is an undated planner for people who have abandoned a dated diary by March. With no dates printed, you start in whichever month you begin, skip a busy week without leaving blank pages behind, and pick up again when life calms down.`,
+    `It covers 12 months, with monthly calendar pages for the big picture, weekly spreads for day-to-day plans, and dot grid notes pages for everything that does not fit in a box. Use it as a uni or work planner, a mid-year planner starting in July, or a gentler alternative to a strict daily diary. The dusk blue cover belongs to our Someday Studio collection, alongside Pocket Notes.`],
+  'pocket-notes':[
+    `Pocket Notes is our small spiral notebook: a 10 × 10 cm square in blue gingham, sized for a coat pocket, a small bag or the space beside your laptop. It is the notebook for things you need to write down now and find again later.`,
+    `Inside are 80 pages of 5mm dot grid paper, good for shopping lists, phone numbers, daily to-dos, gift ideas and quick sketches. At $14 it is also an easy add-on gift, or a stocking filler for someone who already owns a big notebook and needs a small one to go with it.`],
+  'saigon-set':[
+    `The Saigon Mornings Set brings together all three notebooks from our first collection, inspired by early mornings in Ho Chi Minh City: Iced Coffee (dot grid), Alleyway (dot grid) and Street Food (lined). They arrive together in a recycled kraft gift box.`,
+    `As a set they cost $89 instead of $102, and the mix of rulings is deliberate: one dot grid notebook for planning, one for ideas and sketches, and one lined notebook for longer writing. It is a ready-to-give present for birthdays, graduations and Christmas, especially for someone with a connection to Vietnam or a love of travel journaling. Orders over $60 ship free Australia-wide, so the set ships free.`],
+  'arvo-set':[
+    `The Adelaide Arvo Set includes all three notebooks from our Australian collection: Arvo (dot grid), Brekkie (lined) and Cuppa (plain), packed together in a recycled kraft gift box.`,
+    `Bought together they cost $89 instead of $102. Having all three rulings means one notebook for planning, one for writing and one for drawing, so the set suits students, creatives and anyone setting up a new routine. Each cover carries an everyday Aussie word and its definition, which makes the set a popular gift from Adelaide for friends overseas, new arrivals in South Australia or anyone who says "arvo" without thinking about it. Orders over $60 ship free Australia-wide.`],
+  'crabit-liberica':[
+    `Liberica is part of the Coffee Beans series from Crabit, a stationery brand from Vietnam that Paper Land stocks in Australia. Liberica is a rare, bold coffee bean grown across Southeast Asia, and the notebook carries its name on a calm taupe cover with an elastic closure.`,
+    `Its grid pages are the most structured layout in the series: good for tables, budgets, habit trackers, technical drawings and maths or science notes. If you like your notes in neat columns, grid paper does half the work for you.`],
+  'crabit-robusta':[
+    `Robusta is from Crabit's Coffee Beans series, named after the strong, punchy bean behind most Vietnamese coffee. Crabit is a stationery brand from Vietnam, and Paper Land is proud to stock it in Australia.`,
+    `With dot grid pages, Robusta is a strong choice for bullet journaling, weekly spreads and layouts you design yourself. The deep brown cover is understated enough for work, and the dots fade into the background once you start writing or sketching.`],
+  'crabit-excela':[
+    `Excela is from Crabit's Coffee Beans series, named after Excelsa, an uncommon coffee bean known for its tart, fruity flavour. Crabit is a Vietnamese stationery brand stocked in Australia by Paper Land.`,
+    `Lined pages make Excela a comfortable everyday writing notebook: class notes, long journal entries, story drafts and to-do lists that run on for a while. The mid-brown cover sits well alongside Arabica if you want two lined notebooks for different subjects.`],
+  'crabit-arabica':[
+    `Arabica is from Crabit's Coffee Beans series, named after the smooth, aromatic bean that most cafés around the world are built on. Crabit is a stationery brand from Vietnam, stocked in Australia by Paper Land.`,
+    `Its lined pages suit study notes, meeting notes and daily journaling, and the light latte-coloured cover is the softest in the series. A good first notebook from Crabit if you prefer lines over dots or grid.`],
+  'crabit-white-coffee':[
+    `White Coffee belongs to Crabit's Café series, inspired by bạc xỉu, Saigon's sweet and milky white coffee. Crabit is a Vietnamese stationery brand, and Paper Land stocks its notebooks in Australia.`,
+    `The dot grid pages make it a relaxed everyday journal: planning, doodles, lists and bullet journal spreads. The pale cream cover makes it one of the brightest notebooks we stock, and a nice gift for a coffee lover.`],
+  'crabit-iced-black':[
+    `Iced Black belongs to Crabit's Café series, inspired by cà phê đen đá, Vietnam's strong iced black coffee with no milk and no fuss. Crabit is a stationery brand from Vietnam, stocked in Australia by Paper Land.`,
+    `Fittingly, it is a focused notebook: a near-black cover and dot grid pages for to-do lists, project plans and work notes. Dots keep your lists aligned without the visual noise of full lines.`],
+  'crabit-coconut':[
+    `Coconut Coffee belongs to Crabit's Café series, inspired by the creamy coconut coffee served in Hanoi's cafés. Crabit is a Vietnamese stationery brand, and Paper Land stocks its notebooks in Australia.`,
+    `Grid pages make it the planner's choice in the Café series: tables, trackers, timetables and neat layouts all line up without a ruler. The soft off-white cover keeps it light and easy to personalise with stickers or washi tape.`],
+  'crabit-iced-milk':[
+    `Iced Milk belongs to Crabit's Café series, inspired by cà phê sữa đá, Vietnamese iced coffee with sweet condensed milk. Crabit is a stationery brand from Vietnam, stocked in Australia by Paper Land.`,
+    `Its grid pages suit study plans, project notes and anything that benefits from structure, such as formulas, diagrams or budgets. The caramel-brown cover is warm and easy to spot in a full bag.`],
+  'crabit-americano':[
+    `Americano is from Crabit's Coffeeine line, where every cover carries a dictionary-style definition of a coffee, a design idea we love and share with our own notebooks. Crabit is a Vietnamese stationery brand that Paper Land stocks in Australia.`,
+    `It has a black hardcover with an elastic closure and dotted pages, so it handles bullet journaling, planning and sketching equally well. Collect it with Espresso and Latte for a matching set of three.`],
+  'crabit-espresso':[
+    `Espresso is from Crabit's Coffeeine line: a warm peach hardcover with a dictionary-style definition of the espresso on the front. Crabit is a stationery brand from Vietnam, stocked in Australia by Paper Land.`,
+    `Its dotted pages make it a flexible everyday notebook for planning, lists and creative journaling. It is the brightest of the three Coffeeine notebooks, and looks best next to Latte and Americano.`],
+  'crabit-latte':[
+    `Latte is from Crabit's Coffeeine line: a soft beige hardcover with a dictionary-style definition of the latte, plus an elastic closure to keep pages tidy in a bag. Crabit is a Vietnamese stationery brand that Paper Land stocks in Australia.`,
+    `Dotted pages make it equally at home as a bullet journal, a study notebook or a sketch-and-notes journal. A gentle, neutral gift for anyone whose day starts with a coffee order.`],
+};
+
+function productMoreHTML(id){
+  const p=PRODUCTS[id], more=PRODUCT_MORE[id]; if(!p||!more) return '';
+  let spec;
+  if(p.set) spec=`Each notebook in the set is an A5 hardcover with 160 numbered pages of 120gsm ivory paper, lay-flat binding, an elastic closure, a ribbon marker and a back pocket.`;
+  else if(p.spiral) spec=`Specs: 10 × 10 cm, spiral bound, 80 pages of 100gsm paper with a 5mm dot grid.`;
+  else if(p.brand) spec=`Format: ${p.fmt}${p.paper?`, ${p.paper} paper`:''}. Made by ${p.brand} in Vietnam.`;
+  else spec=`Every Paper Land A5 hardcover has 160 numbered pages of 120gsm ivory paper, lay-flat binding, an elastic closure, a ribbon marker and a back pocket. The 120gsm paper is tested with gel pens, ballpoints, pencils and fine fountain pens; very wet markers may show through, so try them on the last page first.`;
+  const ship=`Dispatched from Adelaide in 1–2 business days. Standard shipping is $9.95 Australia-wide, free on orders over $${typeof FREE_SHIP!=='undefined'?FREE_SHIP:60}, with 30-day returns on unused items.`;
+  return more.map(t=>`<p>${t}</p>`).join('')+`<p>${spec} ${ship}</p>`;
+}
+
 const JOURNAL = {
   'spiral-vs-hardcover-notebook':{alt:'A black hardcover notebook and a small blue gingham spiral notebook on a desk',title:'Spiral notebook or hardcover notebook? How to choose',date:'November 2026',cat:'Notebook Guides',glyph:'spiral',bg:'linear-gradient(135deg,#E9E2D6,#CDBFAB)',prods:['pocket-notes','iced-coffee','arvo'],
     lede:'Spiral notebooks fold back and tear out clean. Hardcovers last and travel well. Here is how to pick the right one for lectures, lists, journals and gifts.',
@@ -457,7 +535,8 @@ function pageProduct(){
         <div class="buy"><div class="stepper"><button id="minus" aria-label="Decrease">−</button><span id="qty">1</span><button id="plus" aria-label="Increase">+</button></div>
           <button class="btn solid" id="buy">Add to Cart</button></div>
         <div class="note-ship">Free shipping Australia-wide on orders over $${FREE_SHIP}. Dispatched from Adelaide in 1–2 business days.</div>
-        <details open><summary>Details</summary><div class="body"><ul>
+        ${PRODUCT_MORE[id]?`<details open class="about"><summary>About this ${p.set?'set':'notebook'}</summary><div class="body">${productMoreHTML(id)}</div></details>`:''}
+        <details><summary>Details</summary><div class="body"><ul>
           <li>Format: ${p.fmt}</li>
           ${p.brand?(p.paper?`<li>Paper: ${p.paper}</li>`:''):`<li>Pages: ${p.set?'three notebooks, as listed':p.spiral?'80 pages, 100gsm':'160 numbered pages, 120gsm ivory paper'}</li>`}
           <li>Ruling: ${p.set?'mixed':p.ruling}</li>${p.spiral||p.set||p.brand?'':'<li>Lay-flat binding, elastic closure, ribbon marker and back pocket</li>'}

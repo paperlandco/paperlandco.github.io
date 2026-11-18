@@ -111,7 +111,8 @@ async def extract(pw):
     data = await pg.evaluate('''() => ({P: PRODUCTS, C: COLLECTIONS, J: JOURNAL,
         T: Object.fromEntries(Object.keys(PRODUCTS).map(id => [id, titleOf(id)])),
         A: Object.fromEntries(Object.keys(JOURNAL).map(k => [k, articleHTML(k)])),
-        BL: blogListHTML()})''')
+        BL: blogListHTML(),
+        M: Object.fromEntries(Object.keys(PRODUCTS).map(id => [id, typeof productMoreHTML==='function' ? productMoreHTML(id) : '']))})''')
     await b.close()
     return data
 
@@ -152,7 +153,8 @@ def build_products(D):
         static = (f'<div class="info"><div class="eyebrow">{esc(colname)}</div><h1>{esc(title_txt)}</h1>'
                   f'<div class="price">${p["price"]:.2f} AUD</div>'
                   + (f'<div class="defn"><small>{esc(p["name"])} · {esc(p["ph"])} · noun</small>{esc(p["def"])}</div>' if p.get('def') else '')
-                  + f'<p class="desc">{p["desc"]}</p><ul>' + ''.join(f'<li>{esc(d)}</li>' for d in details) + '</ul></div>')
+                  + f'<p class="desc">{p["desc"]}</p><ul>' + ''.join(f'<li>{esc(d)}</li>' for d in details) + '</ul>'
+                  + (f'<div class="about"><h2>About this {"set" if p.get("set") else "notebook"}</h2>{D["M"].get(pid, "")}</div>' if D.get('M', {}).get(pid) else '') + '</div>')
         page = set_between(page, '<div class="pdp" id="pdp">', '</div>\n  <div class="sec-head"', static)
         write(f, page)
     return [f'product-{pid}.html' for pid in P]
