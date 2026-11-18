@@ -215,6 +215,14 @@ def build_static(D):
             cards = ''.join(f'<div class="card"><a class="stage-link" href="product-{pid}.html"><h3>{esc(T[pid])}</h3></a>'
                             f'<div class="row"><span class="price">${p["price"]:.2f} AUD</span></div></div>' for pid, p in P.items())
             page = set_between(page, '<div class="grid" id="grid" style="padding-bottom:100px">', '</div>\n</section>', cards)
+        if f == 'collections.html':   # static copy of every collection so crawlers see the text (app.js redraws it)
+            blocks = ''
+            for k, c in C.items():
+                items = [pid for pid, p in P.items() if p.get('col') == k]
+                blocks += (f'<section class="col-block" id="{k}"><div class="col-intro"><div><div class="eyebrow">{esc(c["chapter"])}</div>'
+                           f'<h2>{esc(c["name"])}</h2><div class="native">{esc(c["sub"])}</div></div><div><p>{c["blurb"]}</p></div></div><ul>'
+                           + ''.join(f'<li><a href="product-{pid}.html">{esc(T[pid])}</a> (${P[pid]["price"]:.2f})</li>' for pid in items) + '</ul></section>')
+            page = set_between(page, '<div id="cols">', '</div>\n</section>', blocks)
         if f == 'blog.html':
             page = set_between(page, '<div class="jlist" id="jlist">', '</div>\n</section>', D['BL'])
         write(f, page)
