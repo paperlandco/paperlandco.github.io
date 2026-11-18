@@ -264,6 +264,7 @@ function chrome(){
       ${a('about.html','About','about')}
       ${a('blog.html','Blog','journal')}
       ${a('help.html','Help','help')}
+      ${a('contact.html','Contact','contact')}
       <li><a href="index.html" class="play-link">▶ Play</a></li>
     </ul>
     <div style="display:flex;gap:22px;align-items:center">
@@ -283,12 +284,12 @@ function chrome(){
     <div class="fgrid">
       <div class="fbrand"><a href="home.html" class="logo">Paper <span>Land</span></a>
         <p>Notebooks for slow mornings — designed in Adelaide, inspired by Saigon.</p>
-        <p style="margin-top:14px">hello@paperland.com.au</p></div>
+        <p style="margin-top:14px"><a href="mailto:hello@paperland.com.au">hello@paperland.com.au</a></p></div>
       <div><h4>Shop</h4><ul><li><a href="shop.html">Shop All</a></li><li><a href="collections.html#saigon">Saigon Mornings</a></li><li><a href="collections.html#adelaide">Adelaide Arvo</a></li><li><a href="collections.html#studio">Someday Studio</a></li><li><a href="collections.html#crabit">Crabit Coffee Series</a></li><li><a href="shop.html#sets">Gift Sets</a></li></ul></div>
-      <div><h4>Help</h4><ul><li><a href="help.html#shipping">Shipping &amp; Returns</a></li><li><a href="help.html#stockists">Stockists</a></li><li><a href="help.html#contact">Contact Us</a></li><li><a href="help.html#faq">FAQ</a></li></ul></div>
+      <div><h4>Help</h4><ul><li><a href="help.html#shipping">Shipping &amp; Returns</a></li><li><a href="help.html#stockists">Stockists</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="help.html#faq">FAQ</a></li></ul></div>
       <div><h4>Paper Land</h4><ul><li><a href="about.html">Our Story</a></li><li><a href="blog.html">Blog</a></li><li><a href="https://www.instagram.com/">Instagram</a></li><li><a href="https://www.tiktok.com/">TikTok</a></li></ul></div>
     </div>
-    <div class="fbase"><span>© 2026 Paper Land. All rights reserved.</span><span>Privacy Policy · Terms of Use</span></div>
+    <div class="fbase"><span>© 2026 Paper Land. All rights reserved.</span><span><a href="privacy.html">Privacy Policy</a></span></div>
   </div></footer>
   <div class="scrim" id="scrim"></div>
   <aside class="drawer" aria-label="Your cart">
@@ -369,6 +370,32 @@ document.addEventListener('click',e=>{
   if(q){const id=q.dataset.id;if(+q.dataset.q<0)track('remove_from_cart',{currency:'AUD',value:PRODUCTS[id].price,items:[gaItem(id,1)]});cart[id]+= +q.dataset.q;if(cart[id]<=0)delete cart[id];saveCart();drawCart()}
 });
 
+/* ---------- user-behaviour events (GA4) ----------
+   cta_click   – any call-to-action button (text + page it sits on)
+   nav_click   – header menu and footer links
+   filter_use  – shop collection filter or sort order
+   faq_open    – which help question a visitor opens
+   email_click / social_click – contact intent and social interest
+   scroll_depth – 25/50/75/100% of a content page read (game page excluded) */
+document.addEventListener('click',e=>{
+  const page=document.body.dataset.page||'game', txt=el=>(el.textContent||'').replace(/\s+/g,' ').trim().slice(0,60);
+  const cta=e.target.closest('a.btn, a.btn2, a.link');
+  if(cta && !cta.closest('.drawer')) track('cta_click',{cta_text:txt(cta),cta_location:page,link_url:cta.getAttribute('href')||''});
+  const nav=e.target.closest('header .menu a, header .logo, footer a');
+  if(nav){const href=nav.getAttribute('href')||'';
+    if(/^mailto:/.test(href)) track('email_click',{cta_location:page});
+    else if(/instagram|tiktok/.test(href)) track('social_click',{social_network:/instagram/.test(href)?'instagram':'tiktok'});
+    else track('nav_click',{link_text:txt(nav),nav_area:nav.closest('header')?'header':'footer',cta_location:page,link_url:href});}
+  else { const m=e.target.closest('a[href^="mailto:"]'); if(m) track('email_click',{cta_location:page}); }
+  const f=e.target.closest('#filters a'); if(f) track('filter_use',{filter_type:'collection',filter_value:f.dataset.f||txt(f)});
+});
+document.addEventListener('toggle',e=>{const d=e.target; if(d.tagName==='DETAILS'&&d.open&&d.closest('#faq')){const s=d.querySelector('summary'); track('faq_open',{faq_question:s?s.textContent.trim().slice(0,100):''})}},true);
+(()=>{ if(!document.body.dataset.page) return; const hit={};
+  const check=()=>{const h=document.documentElement, max=h.scrollHeight-innerHeight; if(max<200) return;
+    const p=Math.round(scrollY/max*100); [25,50,75,100].forEach(t=>{if(p>=t-1&&!hit[t]){hit[t]=1;track('scroll_depth',{scroll_percent:t,cta_location:document.body.dataset.page})}})};
+  addEventListener('scroll',()=>{clearTimeout(check.t);check.t=setTimeout(check,250)},{passive:true});
+})();
+
 /* ---------- page: home ---------- */
 function pageHome(){
   $('#bFan').innerHTML=['street-food','alleyway','iced-coffee','arvo','someday'].map(id=>`<a href="${purl(id)}" aria-label="${titleOf(id)}">${cover(id)}</a>`).join('');
@@ -395,7 +422,7 @@ function pageShop(){
     track('view_item_list',{item_list_id:f,item_list_name:f==='all'?'Shop all':f==='sets'?'Gift sets':COLLECTIONS[f].name,items:ids.map((id,i)=>Object.assign(gaItem(id),{index:i}))});
     $('#shopTitle').textContent= f==='all'?'Shop all notebooks': f==='sets'?'Gift sets': COLLECTIONS[f].name;
   };
-  window.addEventListener('hashchange',draw); $('#sort').onchange=draw; draw();
+  window.addEventListener('hashchange',draw); $('#sort').onchange=()=>{track('filter_use',{filter_type:'sort',filter_value:$('#sort').value});draw()}; draw();
 }
 
 /* ---------- page: product ---------- */
@@ -508,7 +535,8 @@ function pageArticle(){
 
 /* ---------- page: help ---------- */
 function pageHelp(){
-  $('#cForm').addEventListener('submit',e=>{e.preventDefault();track('contact_form_submit');e.target.querySelectorAll('input,select,textarea,button').forEach(x=>x.disabled=true);$('#cOk').style.display='block'});
+  const cf=$('#cForm');
+  if(cf) cf.addEventListener('submit',e=>{e.preventDefault();track('contact_form_submit',{form_topic:$('#ct').value,cta_location:document.body.dataset.page});track('generate_lead',{lead_source:'contact_form'});e.target.querySelectorAll('input,select,textarea,button').forEach(x=>x.disabled=true);$('#cOk').style.display='block'});
   if(location.hash){const t=document.getElementById(location.hash.slice(1)); if(t){if(t.tagName==='DETAILS')t.open=true;setTimeout(()=>t.scrollIntoView(),50)}}
 }
 
@@ -548,4 +576,4 @@ function welcome(){
 
 /* ---------- boot ---------- */
 chrome(); drawCart(); welcome();
-({home:pageHome,shop:pageShop,product:pageProduct,collections:pageCollections,about:pageAbout,journal:pageJournal,article:pageArticle,help:pageHelp}[document.body.dataset.page]||(()=>{}))();
+({home:pageHome,shop:pageShop,product:pageProduct,collections:pageCollections,about:pageAbout,journal:pageJournal,article:pageArticle,help:pageHelp,contact:pageHelp}[document.body.dataset.page]||(()=>{}))();

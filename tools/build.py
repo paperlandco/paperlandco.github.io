@@ -40,6 +40,10 @@ PAGES = {  # file -> (title, description, og image)
                   'Notebook guides from Paper Land: spiral vs hardcover, notebook paper and gsm explained, gift ideas, journaling how-tos and the stories behind our notebooks.'),
     'help.html': ('Help, shipping and contact — Paper Land',
                   'Shipping, returns, FAQs and contact details for Paper Land. Standard shipping $9.95 Australia-wide, free over $60, with 30-day returns.'),
+    'contact.html': ('Contact Paper Land — notebook orders, wholesale and questions',
+                     'Contact Paper Land, an Adelaide stationery brand. Ask about orders, returns, our notebooks or wholesale. We reply within two business days.'),
+    'privacy.html': ('Privacy Policy — Paper Land',
+                     'How Paper Land uses Google Analytics and cookies to understand website use, and the choices you have.'),
 }
 
 esc = lambda s: html.escape(str(s), quote=True)
@@ -222,7 +226,7 @@ def build_static(D):
 
 
 def build_sitemap(files):
-    urls = ['', 'home.html', 'shop.html', 'collections.html', 'about.html', 'blog.html', 'help.html'] + files
+    urls = ['', 'home.html', 'shop.html', 'collections.html', 'about.html', 'blog.html', 'help.html', 'contact.html', 'privacy.html'] + files
     body = ''.join(f'  <url><loc>{BASE}{u}</loc><lastmod>{TODAY}</lastmod></url>\n' for u in urls)
     write('sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + body + '</urlset>\n')
     return len(urls)
